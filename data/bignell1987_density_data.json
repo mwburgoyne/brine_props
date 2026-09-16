@@ -1,0 +1,854 @@
+{
+  "citation": {
+    "author": "Noel Bignell",
+    "year": 1987,
+    "title": "Precise Density Measurements of Aqueous Solutions of Mixed Nonpolar Gases",
+    "journal": "The Journal of Physical Chemistry",
+    "volume": 91,
+    "issue": 6,
+    "pages": "1687-1690",
+    "doi": "10.1021/j100290a080"
+  },
+  "source_pdf": "Papers/61_Bignell_1987_H2_Ar_mixed_gas_water_density_3-25C.pdf",
+  "source_sha256": "eb39842a90b22add1044ffabab4b168562360dbfbb4da28362f3782b0d7d4730",
+  "source_table_pdf_page": 3,
+  "ingested": "2026-09-05",
+  "extraction": "Positioned PDF text; all 108 rows matched to visual transcription.",
+  "quantity": "Density of gas-saturated water minus density of the same gas-free sample",
+  "pressure": {
+    "description": "Atmospheric pressure",
+    "numeric_MPa": null,
+    "caution": "Table I has no row pressures. About 7 bar refers to gas-mixture preparation, not liquid measurement."
+  },
+  "solvent": "Water, no salt",
+  "dissolved_composition": null,
+  "gas_purity": {
+    "Ar": 0.9999,
+    "H2": 0.995
+  },
+  "dry_gas_Ar_mole_fraction_table_III": {
+    "ideal_preparation": {
+      "value": 0.4981,
+      "reported_experimental_error": 0.002
+    },
+    "virial_corrected_preparation": {
+      "value": 0.4973,
+      "reported_experimental_error": 0.002
+    },
+    "inferred_from_density_fit": {
+      "value": 0.5326,
+      "reported_experimental_error": 0.0013
+    },
+    "caution": "Not dissolved argon mole fractions; quoted errors have no assigned coverage factor here."
+  },
+  "table_I": {
+    "Ar": [
+      {
+        "table_row": 1,
+        "temperature_degC": 13.67,
+        "temperature_K": 286.82,
+        "delta_rho_g_m3": 14.309,
+        "delta_rho_kg_m3": 0.014308999999999999
+      },
+      {
+        "table_row": 2,
+        "temperature_degC": 13.67,
+        "temperature_K": 286.82,
+        "delta_rho_g_m3": 13.998,
+        "delta_rho_kg_m3": 0.013998
+      },
+      {
+        "table_row": 3,
+        "temperature_degC": 13.67,
+        "temperature_K": 286.82,
+        "delta_rho_g_m3": 14.17,
+        "delta_rho_kg_m3": 0.01417
+      },
+      {
+        "table_row": 4,
+        "temperature_degC": 17.02,
+        "temperature_K": 290.17,
+        "delta_rho_g_m3": 13.511,
+        "delta_rho_kg_m3": 0.013510999999999999
+      },
+      {
+        "table_row": 5,
+        "temperature_degC": 17.02,
+        "temperature_K": 290.17,
+        "delta_rho_g_m3": 13.245,
+        "delta_rho_kg_m3": 0.013245
+      },
+      {
+        "table_row": 6,
+        "temperature_degC": 17.02,
+        "temperature_K": 290.17,
+        "delta_rho_g_m3": 13.408,
+        "delta_rho_kg_m3": 0.013408
+      },
+      {
+        "table_row": 7,
+        "temperature_degC": 17.02,
+        "temperature_K": 290.17,
+        "delta_rho_g_m3": 13.529,
+        "delta_rho_kg_m3": 0.013529
+      },
+      {
+        "table_row": 8,
+        "temperature_degC": 19.59,
+        "temperature_K": 292.74,
+        "delta_rho_g_m3": 12.849,
+        "delta_rho_kg_m3": 0.012849000000000001
+      },
+      {
+        "table_row": 9,
+        "temperature_degC": 19.59,
+        "temperature_K": 292.74,
+        "delta_rho_g_m3": 13.208,
+        "delta_rho_kg_m3": 0.013208000000000001
+      },
+      {
+        "table_row": 10,
+        "temperature_degC": 19.59,
+        "temperature_K": 292.74,
+        "delta_rho_g_m3": 13.372,
+        "delta_rho_kg_m3": 0.013372
+      },
+      {
+        "table_row": 11,
+        "temperature_degC": 19.59,
+        "temperature_K": 292.74,
+        "delta_rho_g_m3": 12.963,
+        "delta_rho_kg_m3": 0.012962999999999999
+      },
+      {
+        "table_row": 12,
+        "temperature_degC": 3.98,
+        "temperature_K": 277.13,
+        "delta_rho_g_m3": 16.554,
+        "delta_rho_kg_m3": 0.016554
+      },
+      {
+        "table_row": 13,
+        "temperature_degC": 3.98,
+        "temperature_K": 277.13,
+        "delta_rho_g_m3": 16.31,
+        "delta_rho_kg_m3": 0.016309999999999998
+      },
+      {
+        "table_row": 14,
+        "temperature_degC": 3.98,
+        "temperature_K": 277.13,
+        "delta_rho_g_m3": 16.185,
+        "delta_rho_kg_m3": 0.016184999999999998
+      },
+      {
+        "table_row": 15,
+        "temperature_degC": 3.98,
+        "temperature_K": 277.13,
+        "delta_rho_g_m3": 15.857,
+        "delta_rho_kg_m3": 0.015857
+      },
+      {
+        "table_row": 16,
+        "temperature_degC": 7.17,
+        "temperature_K": 280.32,
+        "delta_rho_g_m3": 15.312,
+        "delta_rho_kg_m3": 0.015312
+      },
+      {
+        "table_row": 17,
+        "temperature_degC": 7.17,
+        "temperature_K": 280.32,
+        "delta_rho_g_m3": 15.021,
+        "delta_rho_kg_m3": 0.015021000000000001
+      },
+      {
+        "table_row": 18,
+        "temperature_degC": 7.17,
+        "temperature_K": 280.32,
+        "delta_rho_g_m3": 16.115,
+        "delta_rho_kg_m3": 0.016114999999999997
+      },
+      {
+        "table_row": 19,
+        "temperature_degC": 7.17,
+        "temperature_K": 280.32,
+        "delta_rho_g_m3": 15.982,
+        "delta_rho_kg_m3": 0.015982
+      },
+      {
+        "table_row": 20,
+        "temperature_degC": 7.17,
+        "temperature_K": 280.32,
+        "delta_rho_g_m3": 15.657,
+        "delta_rho_kg_m3": 0.015657
+      },
+      {
+        "table_row": 21,
+        "temperature_degC": 7.17,
+        "temperature_K": 280.32,
+        "delta_rho_g_m3": 15.653,
+        "delta_rho_kg_m3": 0.015653
+      },
+      {
+        "table_row": 22,
+        "temperature_degC": 7.17,
+        "temperature_K": 280.32,
+        "delta_rho_g_m3": 15.752,
+        "delta_rho_kg_m3": 0.015752000000000002
+      },
+      {
+        "table_row": 23,
+        "temperature_degC": 9.11,
+        "temperature_K": 282.26,
+        "delta_rho_g_m3": 14.455,
+        "delta_rho_kg_m3": 0.014455
+      },
+      {
+        "table_row": 24,
+        "temperature_degC": 9.11,
+        "temperature_K": 282.26,
+        "delta_rho_g_m3": 14.601,
+        "delta_rho_kg_m3": 0.014601000000000001
+      },
+      {
+        "table_row": 25,
+        "temperature_degC": 9.11,
+        "temperature_K": 282.26,
+        "delta_rho_g_m3": 14.834,
+        "delta_rho_kg_m3": 0.014834
+      },
+      {
+        "table_row": 26,
+        "temperature_degC": 9.11,
+        "temperature_K": 282.26,
+        "delta_rho_g_m3": 14.858,
+        "delta_rho_kg_m3": 0.014858
+      },
+      {
+        "table_row": 27,
+        "temperature_degC": 9.11,
+        "temperature_K": 282.26,
+        "delta_rho_g_m3": 14.851,
+        "delta_rho_kg_m3": 0.014851000000000001
+      },
+      {
+        "table_row": 28,
+        "temperature_degC": 12.02,
+        "temperature_K": 285.17,
+        "delta_rho_g_m3": 14.667,
+        "delta_rho_kg_m3": 0.014667
+      },
+      {
+        "table_row": 29,
+        "temperature_degC": 12.02,
+        "temperature_K": 285.17,
+        "delta_rho_g_m3": 14.505,
+        "delta_rho_kg_m3": 0.014505
+      },
+      {
+        "table_row": 30,
+        "temperature_degC": 12.02,
+        "temperature_K": 285.17,
+        "delta_rho_g_m3": 14.616,
+        "delta_rho_kg_m3": 0.014616
+      },
+      {
+        "table_row": 31,
+        "temperature_degC": 12.02,
+        "temperature_K": 285.17,
+        "delta_rho_g_m3": 14.545,
+        "delta_rho_kg_m3": 0.014545
+      },
+      {
+        "table_row": 32,
+        "temperature_degC": 25.0,
+        "temperature_K": 298.15,
+        "delta_rho_g_m3": 11.778,
+        "delta_rho_kg_m3": 0.011778
+      },
+      {
+        "table_row": 33,
+        "temperature_degC": 25.0,
+        "temperature_K": 298.15,
+        "delta_rho_g_m3": 12.149,
+        "delta_rho_kg_m3": 0.012148999999999998
+      },
+      {
+        "table_row": 34,
+        "temperature_degC": 25.0,
+        "temperature_K": 298.15,
+        "delta_rho_g_m3": 12.142,
+        "delta_rho_kg_m3": 0.012142
+      },
+      {
+        "table_row": 35,
+        "temperature_degC": 25.0,
+        "temperature_K": 298.15,
+        "delta_rho_g_m3": 12.062,
+        "delta_rho_kg_m3": 0.012062
+      },
+      {
+        "table_row": 36,
+        "temperature_degC": 25.0,
+        "temperature_K": 298.15,
+        "delta_rho_g_m3": 11.862,
+        "delta_rho_kg_m3": 0.011862
+      },
+      {
+        "table_row": 37,
+        "temperature_degC": 25.0,
+        "temperature_K": 298.15,
+        "delta_rho_g_m3": 11.919,
+        "delta_rho_kg_m3": 0.011919
+      }
+    ],
+    "H2": [
+      {
+        "table_row": 1,
+        "temperature_degC": 3.87,
+        "temperature_K": 277.02,
+        "delta_rho_g_m3": -18.474,
+        "delta_rho_kg_m3": -0.018474
+      },
+      {
+        "table_row": 2,
+        "temperature_degC": 3.87,
+        "temperature_K": 277.02,
+        "delta_rho_g_m3": -18.491,
+        "delta_rho_kg_m3": -0.018491
+      },
+      {
+        "table_row": 3,
+        "temperature_degC": 3.87,
+        "temperature_K": 277.02,
+        "delta_rho_g_m3": -18.553,
+        "delta_rho_kg_m3": -0.018553
+      },
+      {
+        "table_row": 4,
+        "temperature_degC": 3.87,
+        "temperature_K": 277.02,
+        "delta_rho_g_m3": -18.155,
+        "delta_rho_kg_m3": -0.018155
+      },
+      {
+        "table_row": 5,
+        "temperature_degC": 3.87,
+        "temperature_K": 277.02,
+        "delta_rho_g_m3": -18.22,
+        "delta_rho_kg_m3": -0.01822
+      },
+      {
+        "table_row": 6,
+        "temperature_degC": 3.87,
+        "temperature_K": 277.02,
+        "delta_rho_g_m3": -18.407,
+        "delta_rho_kg_m3": -0.018407
+      },
+      {
+        "table_row": 7,
+        "temperature_degC": 3.87,
+        "temperature_K": 277.02,
+        "delta_rho_g_m3": -18.244,
+        "delta_rho_kg_m3": -0.018244
+      },
+      {
+        "table_row": 8,
+        "temperature_degC": 7.04,
+        "temperature_K": 280.19,
+        "delta_rho_g_m3": -17.432,
+        "delta_rho_kg_m3": -0.017432
+      },
+      {
+        "table_row": 9,
+        "temperature_degC": 7.04,
+        "temperature_K": 280.19,
+        "delta_rho_g_m3": -17.667,
+        "delta_rho_kg_m3": -0.017667000000000002
+      },
+      {
+        "table_row": 10,
+        "temperature_degC": 7.04,
+        "temperature_K": 280.19,
+        "delta_rho_g_m3": -17.502,
+        "delta_rho_kg_m3": -0.017502
+      },
+      {
+        "table_row": 11,
+        "temperature_degC": 9.0,
+        "temperature_K": 282.15,
+        "delta_rho_g_m3": -17.079,
+        "delta_rho_kg_m3": -0.017079
+      },
+      {
+        "table_row": 12,
+        "temperature_degC": 9.0,
+        "temperature_K": 282.15,
+        "delta_rho_g_m3": -17.221,
+        "delta_rho_kg_m3": -0.017221
+      },
+      {
+        "table_row": 13,
+        "temperature_degC": 9.0,
+        "temperature_K": 282.15,
+        "delta_rho_g_m3": -17.192,
+        "delta_rho_kg_m3": -0.017192
+      },
+      {
+        "table_row": 14,
+        "temperature_degC": 9.0,
+        "temperature_K": 282.15,
+        "delta_rho_g_m3": -17.053,
+        "delta_rho_kg_m3": -0.017053000000000002
+      },
+      {
+        "table_row": 15,
+        "temperature_degC": 9.0,
+        "temperature_K": 282.15,
+        "delta_rho_g_m3": -16.929,
+        "delta_rho_kg_m3": -0.016929
+      },
+      {
+        "table_row": 16,
+        "temperature_degC": 11.04,
+        "temperature_K": 284.19,
+        "delta_rho_g_m3": -16.504,
+        "delta_rho_kg_m3": -0.016504
+      },
+      {
+        "table_row": 17,
+        "temperature_degC": 11.04,
+        "temperature_K": 284.19,
+        "delta_rho_g_m3": -16.41,
+        "delta_rho_kg_m3": -0.01641
+      },
+      {
+        "table_row": 18,
+        "temperature_degC": 11.04,
+        "temperature_K": 284.19,
+        "delta_rho_g_m3": -16.581,
+        "delta_rho_kg_m3": -0.016581
+      },
+      {
+        "table_row": 19,
+        "temperature_degC": 11.04,
+        "temperature_K": 284.19,
+        "delta_rho_g_m3": -16.488,
+        "delta_rho_kg_m3": -0.016488
+      },
+      {
+        "table_row": 20,
+        "temperature_degC": 12.96,
+        "temperature_K": 286.11,
+        "delta_rho_g_m3": -16.349,
+        "delta_rho_kg_m3": -0.016349
+      },
+      {
+        "table_row": 21,
+        "temperature_degC": 12.96,
+        "temperature_K": 286.11,
+        "delta_rho_g_m3": -16.48,
+        "delta_rho_kg_m3": -0.01648
+      },
+      {
+        "table_row": 22,
+        "temperature_degC": 12.96,
+        "temperature_K": 286.11,
+        "delta_rho_g_m3": -16.507,
+        "delta_rho_kg_m3": -0.016507
+      },
+      {
+        "table_row": 23,
+        "temperature_degC": 12.96,
+        "temperature_K": 286.11,
+        "delta_rho_g_m3": -16.437,
+        "delta_rho_kg_m3": -0.016437
+      },
+      {
+        "table_row": 24,
+        "temperature_degC": 14.95,
+        "temperature_K": 288.1,
+        "delta_rho_g_m3": -15.802,
+        "delta_rho_kg_m3": -0.015802
+      },
+      {
+        "table_row": 25,
+        "temperature_degC": 14.95,
+        "temperature_K": 288.1,
+        "delta_rho_g_m3": -15.903,
+        "delta_rho_kg_m3": -0.015903
+      },
+      {
+        "table_row": 26,
+        "temperature_degC": 14.95,
+        "temperature_K": 288.1,
+        "delta_rho_g_m3": -15.764,
+        "delta_rho_kg_m3": -0.015764
+      },
+      {
+        "table_row": 27,
+        "temperature_degC": 16.93,
+        "temperature_K": 290.08,
+        "delta_rho_g_m3": -15.287,
+        "delta_rho_kg_m3": -0.015287
+      },
+      {
+        "table_row": 28,
+        "temperature_degC": 16.93,
+        "temperature_K": 290.08,
+        "delta_rho_g_m3": -15.455,
+        "delta_rho_kg_m3": -0.015455
+      },
+      {
+        "table_row": 29,
+        "temperature_degC": 16.93,
+        "temperature_K": 290.08,
+        "delta_rho_g_m3": -15.701,
+        "delta_rho_kg_m3": -0.015701
+      },
+      {
+        "table_row": 30,
+        "temperature_degC": 16.93,
+        "temperature_K": 290.08,
+        "delta_rho_g_m3": -15.386,
+        "delta_rho_kg_m3": -0.015385999999999999
+      },
+      {
+        "table_row": 31,
+        "temperature_degC": 18.92,
+        "temperature_K": 292.07,
+        "delta_rho_g_m3": -15.093,
+        "delta_rho_kg_m3": -0.015093
+      },
+      {
+        "table_row": 32,
+        "temperature_degC": 18.92,
+        "temperature_K": 292.07,
+        "delta_rho_g_m3": -15.095,
+        "delta_rho_kg_m3": -0.015095
+      },
+      {
+        "table_row": 33,
+        "temperature_degC": 18.92,
+        "temperature_K": 292.07,
+        "delta_rho_g_m3": -15.166,
+        "delta_rho_kg_m3": -0.015166
+      },
+      {
+        "table_row": 34,
+        "temperature_degC": 18.92,
+        "temperature_K": 292.07,
+        "delta_rho_g_m3": -15.188,
+        "delta_rho_kg_m3": -0.015188
+      },
+      {
+        "table_row": 35,
+        "temperature_degC": 20.98,
+        "temperature_K": 294.13,
+        "delta_rho_g_m3": -15.232,
+        "delta_rho_kg_m3": -0.015231999999999999
+      },
+      {
+        "table_row": 36,
+        "temperature_degC": 20.98,
+        "temperature_K": 294.13,
+        "delta_rho_g_m3": -15.19,
+        "delta_rho_kg_m3": -0.015189999999999999
+      },
+      {
+        "table_row": 37,
+        "temperature_degC": 20.98,
+        "temperature_K": 294.13,
+        "delta_rho_g_m3": -15.166,
+        "delta_rho_kg_m3": -0.015166
+      },
+      {
+        "table_row": 38,
+        "temperature_degC": 20.98,
+        "temperature_K": 294.13,
+        "delta_rho_g_m3": -15.048,
+        "delta_rho_kg_m3": -0.015048
+      },
+      {
+        "table_row": 39,
+        "temperature_degC": 20.98,
+        "temperature_K": 294.13,
+        "delta_rho_g_m3": -15.214,
+        "delta_rho_kg_m3": -0.015214
+      },
+      {
+        "table_row": 40,
+        "temperature_degC": 20.98,
+        "temperature_K": 294.13,
+        "delta_rho_g_m3": -15.399,
+        "delta_rho_kg_m3": -0.015399
+      },
+      {
+        "table_row": 41,
+        "temperature_degC": 22.93,
+        "temperature_K": 296.08,
+        "delta_rho_g_m3": -14.864,
+        "delta_rho_kg_m3": -0.014864
+      },
+      {
+        "table_row": 42,
+        "temperature_degC": 22.93,
+        "temperature_K": 296.08,
+        "delta_rho_g_m3": -14.853,
+        "delta_rho_kg_m3": -0.014853
+      },
+      {
+        "table_row": 43,
+        "temperature_degC": 22.93,
+        "temperature_K": 296.08,
+        "delta_rho_g_m3": -14.8,
+        "delta_rho_kg_m3": -0.0148
+      },
+      {
+        "table_row": 44,
+        "temperature_degC": 22.92,
+        "temperature_K": 296.07,
+        "delta_rho_g_m3": -14.893,
+        "delta_rho_kg_m3": -0.014893
+      },
+      {
+        "table_row": 45,
+        "temperature_degC": 22.92,
+        "temperature_K": 296.07,
+        "delta_rho_g_m3": -14.821,
+        "delta_rho_kg_m3": -0.014820999999999999
+      },
+      {
+        "table_row": 46,
+        "temperature_degC": 22.92,
+        "temperature_K": 296.07,
+        "delta_rho_g_m3": -14.829,
+        "delta_rho_kg_m3": -0.014829
+      },
+      {
+        "table_row": 47,
+        "temperature_degC": 25.02,
+        "temperature_K": 298.17,
+        "delta_rho_g_m3": -14.78,
+        "delta_rho_kg_m3": -0.01478
+      },
+      {
+        "table_row": 48,
+        "temperature_degC": 25.02,
+        "temperature_K": 298.17,
+        "delta_rho_g_m3": -14.759,
+        "delta_rho_kg_m3": -0.014759
+      },
+      {
+        "table_row": 49,
+        "temperature_degC": 25.02,
+        "temperature_K": 298.17,
+        "delta_rho_g_m3": -14.734,
+        "delta_rho_kg_m3": -0.014734
+      },
+      {
+        "table_row": 50,
+        "temperature_degC": 25.02,
+        "temperature_K": 298.17,
+        "delta_rho_g_m3": -14.738,
+        "delta_rho_kg_m3": -0.014738
+      }
+    ],
+    "H2_Ar": [
+      {
+        "table_row": 1,
+        "temperature_degC": 25.01,
+        "temperature_K": 298.16,
+        "delta_rho_g_m3": -0.724,
+        "delta_rho_kg_m3": -0.0007239999999999999
+      },
+      {
+        "table_row": 2,
+        "temperature_degC": 25.01,
+        "temperature_K": 298.16,
+        "delta_rho_g_m3": -0.564,
+        "delta_rho_kg_m3": -0.0005639999999999999
+      },
+      {
+        "table_row": 3,
+        "temperature_degC": 25.01,
+        "temperature_K": 298.16,
+        "delta_rho_g_m3": -0.571,
+        "delta_rho_kg_m3": -0.000571
+      },
+      {
+        "table_row": 4,
+        "temperature_degC": 25.01,
+        "temperature_K": 298.16,
+        "delta_rho_g_m3": -0.411,
+        "delta_rho_kg_m3": -0.00041099999999999996
+      },
+      {
+        "table_row": 5,
+        "temperature_degC": 25.01,
+        "temperature_K": 298.16,
+        "delta_rho_g_m3": -0.303,
+        "delta_rho_kg_m3": -0.000303
+      },
+      {
+        "table_row": 6,
+        "temperature_degC": 19.91,
+        "temperature_K": 293.06,
+        "delta_rho_g_m3": -0.183,
+        "delta_rho_kg_m3": -0.000183
+      },
+      {
+        "table_row": 7,
+        "temperature_degC": 19.91,
+        "temperature_K": 293.06,
+        "delta_rho_g_m3": -0.33,
+        "delta_rho_kg_m3": -0.00033
+      },
+      {
+        "table_row": 8,
+        "temperature_degC": 19.91,
+        "temperature_K": 293.06,
+        "delta_rho_g_m3": -0.24,
+        "delta_rho_kg_m3": -0.00023999999999999998
+      },
+      {
+        "table_row": 9,
+        "temperature_degC": 19.91,
+        "temperature_K": 293.06,
+        "delta_rho_g_m3": -0.198,
+        "delta_rho_kg_m3": -0.00019800000000000002
+      },
+      {
+        "table_row": 10,
+        "temperature_degC": 3.07,
+        "temperature_K": 276.22,
+        "delta_rho_g_m3": 0.102,
+        "delta_rho_kg_m3": 0.000102
+      },
+      {
+        "table_row": 11,
+        "temperature_degC": 3.07,
+        "temperature_K": 276.22,
+        "delta_rho_g_m3": 0.279,
+        "delta_rho_kg_m3": 0.000279
+      },
+      {
+        "table_row": 12,
+        "temperature_degC": 3.06,
+        "temperature_K": 276.21,
+        "delta_rho_g_m3": -0.007,
+        "delta_rho_kg_m3": -7e-06
+      },
+      {
+        "table_row": 13,
+        "temperature_degC": 3.06,
+        "temperature_K": 276.21,
+        "delta_rho_g_m3": 0.012,
+        "delta_rho_kg_m3": 1.2e-05
+      },
+      {
+        "table_row": 14,
+        "temperature_degC": 3.06,
+        "temperature_K": 276.21,
+        "delta_rho_g_m3": -0.004,
+        "delta_rho_kg_m3": -4e-06
+      },
+      {
+        "table_row": 15,
+        "temperature_degC": 11.28,
+        "temperature_K": 284.43,
+        "delta_rho_g_m3": -0.06,
+        "delta_rho_kg_m3": -5.9999999999999995e-05
+      },
+      {
+        "table_row": 16,
+        "temperature_degC": 11.28,
+        "temperature_K": 284.43,
+        "delta_rho_g_m3": 0.134,
+        "delta_rho_kg_m3": 0.000134
+      },
+      {
+        "table_row": 17,
+        "temperature_degC": 11.28,
+        "temperature_K": 284.43,
+        "delta_rho_g_m3": 0.138,
+        "delta_rho_kg_m3": 0.00013800000000000002
+      },
+      {
+        "table_row": 18,
+        "temperature_degC": 11.28,
+        "temperature_K": 284.43,
+        "delta_rho_g_m3": 0.081,
+        "delta_rho_kg_m3": 8.1e-05
+      },
+      {
+        "table_row": 19,
+        "temperature_degC": 11.28,
+        "temperature_K": 284.43,
+        "delta_rho_g_m3": -0.293,
+        "delta_rho_kg_m3": -0.00029299999999999997
+      },
+      {
+        "table_row": 20,
+        "temperature_degC": 11.28,
+        "temperature_K": 284.43,
+        "delta_rho_g_m3": 0.014,
+        "delta_rho_kg_m3": 1.4e-05
+      },
+      {
+        "table_row": 21,
+        "temperature_degC": 11.28,
+        "temperature_K": 284.43,
+        "delta_rho_g_m3": 0.092,
+        "delta_rho_kg_m3": 9.2e-05
+      }
+    ]
+  },
+  "table_II": {
+    "Ar": {
+      "coefficients": [
+        16.91,
+        -0.1985
+      ],
+      "n": 37,
+      "printed_mean_square_deviation_g2_m6": null
+    },
+    "H2": {
+      "coefficients": [
+        -19.57,
+        0.3278,
+        -0.005392
+      ],
+      "n": 50,
+      "printed_mean_square_deviation_g2_m6": 0.021
+    },
+    "H2_Ar": {
+      "coefficients": [
+        0.00438,
+        0.0144,
+        -0.001461
+      ],
+      "n": 21,
+      "printed_mean_square_deviation_g2_m6": 0.018
+    },
+    "additive_sum": {
+      "coefficients": [
+        -1.4285,
+        0.0661,
+        -0.002711
+      ]
+    }
+  },
+  "source_equation_discrepancy": "Mixture intercept printed 0.00438; independent OLS of Table I gives 0.0438018. Other mixture coefficients agree to printing precision. Retain printed and refitted values separately.",
+  "uncertainty_caution": "Fit residual scatter is not a full measurement uncertainty budget. Argon variance is blank in Table II.",
+  "eligibility": {
+    "density_difference_holdout_candidate": true,
+    "direct_tabulated_V_infinity": false,
+    "calibration_used": false,
+    "high_pressure_validation": false,
+    "brine_validation": false,
+    "viscosity_validation": false,
+    "new_N2_measurements": false
+  }
+}

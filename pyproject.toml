@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brine_gas"
+version = "0.1.0"
+description = "Dissolved-gas corrections to brine density and viscosity for CH4, CO2, H2S, N2 and H2"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Mark W. Burgoyne"}]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pandas>=2.0",
+    "matplotlib>=3.7",
+    "pyrestoolbox>=3.7.7",
+]
+
+[tool.setuptools]
+packages = ["brine_gas", "fits", "validation", "figures", "examples"]
+
+[tool.setuptools.package-data]
+brine_gas = ["pitzer.dat"]
