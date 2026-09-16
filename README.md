@@ -1,12 +1,19 @@
 # brine_props
 
-This package calculates how dissolved gases change brine density and viscosity, for CH4, CO2, H2S, N2 and H2. Its central purpose is the gas-induced correction, which applies on top of whatever gas-free brine density and viscosity models you already use; gas-free models (Spivey density, an IAPWS-based viscosity baseline) and an equilibrium-solubility workflow are also provided for a complete calculation. The repository holds the implementation, the measured data behind every fitted constant, and the scripts that reproduce the results of **Dissolved-Gas Corrections to Brine Density and Viscosity: A Single Method for CH4, CO2, H2S, N2 and H2** (Burgoyne and Nielsen, 2026, *Fluid Phase Equilibria*, submitted; not yet public), referred to below as the paper.
+This package calculates how dissolved gases change brine density and viscosity, for CH4, CO2, H2S, N2 and H2. The gas correction is the product; it sits on top of whatever gas-free brine models you already use, and gas-free models (Spivey density, an IAPWS-based viscosity baseline) come bundled so a complete calculation runs out of the box.
 
-What it establishes, in one paragraph: the density change is a mass and volume balance (an identity) around one apparent molar volume per gas, which comes from the Peng-Robinson equation of state of the [Soreide-Whitson framework refresh](https://github.com/mwburgoyne/SW_Framework_Refresh) with one fitted volume shift per gas. CO2-loaded NaCl brine densities at measured dissolved amounts are reproduced within 0.5% of density with no parameter fitted to them. For the other four gases no gas-loaded brine density measurement exists; their predictions rest on molar volumes measured in water and a salinity factor fitted separately, and are combined here without a direct test. Viscosity uses one measured multiplicative factor per gas for CO2, CH4 and H2S; N2 and H2 are assigned no change. See [Validation coverage and limitations](#validation-coverage-and-limitations) before relying on a number.
+The repository holds the code, the measured data behind every fitted constant, and the scripts that reproduce **Dissolved-Gas Corrections to Brine Density and Viscosity: A Single Method for CH4, CO2, H2S, N2 and H2** (Burgoyne and Nielsen, 2026, *Fluid Phase Equilibria*, submitted; not yet public), called the paper below. The repository is `brine_props`; the importable package is `brine_gas`.
 
-The repository is `brine_props`; the importable package is `brine_gas`.
+**If you only want the numbers, these calculations already ship in [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox).** `pyrestoolbox.brine.SoreideWhitson` flashes a gas mixture against brine and returns the gas-saturated density and viscosity in field or metric units. This repository is the reference implementation behind it, with the data and the fits alongside.
 
-**If you only need the numbers, these calculations already ship in [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox).** `pyrestoolbox.brine.SoreideWhitson` flashes a gas mixture against brine and returns the gas-saturated density and viscosity in field or metric units, and `V_phi` and `brine_viscosity` expose the individual pieces. This repository is the reference implementation behind them: the same chain with the measured data, the fits that produced each constant, and the scripts that reproduce the paper.
+Only the CO2 predictions have been tested against gas-loaded brine density measurements; for CH4, H2S, N2 and H2 no such measurement exists, and those predictions rest on molar volumes measured in water plus a salinity factor fitted separately. [What the numbers rest on](#what-the-numbers-rest-on) gives it gas by gas.
+
+Where to start:
+
+- **Reproduce the paper**: [Installation](#installation), then [Reproducing the paper](#reproducing-the-paper).
+- **See what data was used**: [The data](#the-data), or go straight to [data/PROVENANCE.md](data/PROVENANCE.md).
+- **Calculate something of your own**: [First calculation](#first-calculation) and [Further examples](#further-examples).
+- **Check what is and is not tested**: [What the numbers rest on](#what-the-numbers-rest-on).
 
 ## Installation
 
@@ -19,9 +26,24 @@ python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\
 python -m pip install -e .
 ```
 
-This installs `numpy`, `scipy`, `pandas`, `matplotlib` and [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox) (`pyrestoolbox>=3.7.7`, which supplies the equation-of-state parameters and the flash). `python reproduce.py` passes and the examples below print the numbers shown on Linux (Ubuntu on WSL2) under Python 3.11 and 3.12, not yet on Windows or macOS. `pyproject.toml` sets minimum versions, not a pinned environment, so if a result differs in its last digit check your `numpy`, `scipy` and `pyrestoolbox` versions first.
+This installs `numpy`, `scipy`, `pandas`, `matplotlib` and [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox) (`pyrestoolbox>=3.7.7`, which supplies the equation-of-state parameters and the flash). Everything below has been run on Linux (Ubuntu on WSL2) under Python 3.11 and 3.12, not yet on Windows or macOS. `pyproject.toml` sets minimum versions rather than a pinned environment, so if a result differs in its last digit, check your `numpy`, `scipy` and `pyrestoolbox` versions first.
 
-## First calculation: known dissolved amounts
+## Reproducing the paper
+
+```bash
+python reproduce.py --quick    # the validation suite only (293 checks)
+python reproduce.py            # fits -> validation -> scorers -> figures -> examples
+```
+
+The full run re-fits every shipped constant from the data in `data/`, re-scores each dataset, redraws the figures and reprints the worked examples, then compares the regenerated tables against the committed ones and exits non-zero if a step fails or a number moved. It overwrites those tables and the figures as it goes, **so run it in a checkout you can throw away.** Nothing beyond the Python dependencies is needed: no PDFs, no PHREEQC.
+
+## The data
+
+Every measured value used anywhere in the repository is listed in [data/PROVENANCE.md](data/PROVENANCE.md): what it is, the file or module holding it, the source and its DOI, the table and page transcribed, and whether it was fitted or held out. The larger datasets are CSV or JSON in `data/`; a few short published tables live as arrays in the module that uses them, and the provenance table says which. Full references are in `data/references.bib`. The PDFs are not distributed, so module docstrings cite them as `Papers/NN`, numbered at the end of the provenance table.
+
+Calibration and test data are kept apart on purpose. The volume shifts are fitted to gas molar volumes measured in water, while the CO2-loaded brine densities that test them (Calabrese 2019, Yan 2011) have nothing fitted to them.
+
+## First calculation
 
 Temperature in K, pressure in MPa, NaCl as mass fraction `S` (use `salinity_from_molality` for mol/kg), dissolved gas as its salt-free mole fraction `x` (moles of gas over moles of gas plus water; the salt is not counted). Density returns kg/m3, viscosity mPa s.
 
@@ -89,52 +111,38 @@ mu = gas_saturated_viscosity(T, P, gas_dict=x, S=S) # 0.4176 (factor 1.0373)
 
 **Simulator input.** Ezrokhi density and viscosity coefficients for the five gases and NaCl, with their limits: [docs/SIMULATOR.md](docs/SIMULATOR.md).
 
-**The method.** Equations, the fitted volume shifts with their calibration data, the salinity factor and the per-gas viscosity factors: [docs/METHOD.md](docs/METHOD.md).
+## What the numbers rest on
 
-## Validation coverage and limitations
+The density change is a mass and volume balance, an identity, around one apparent molar volume per gas. That volume comes from the Peng-Robinson equation of state of the [Soreide-Whitson framework refresh](https://github.com/mwburgoyne/SW_Framework_Refresh) with one fitted volume shift per gas, and salinity enters through a single gas-generic factor. Viscosity is one measured factor per gas on a baseline of your choosing. Equations, constants and their calibration data: [docs/METHOD.md](docs/METHOD.md).
 
-The evidence is uneven across gases and properties. Calibration means the constant was fitted to that data; independent means measured data the constant was never fitted to; assumption means no measurement constrains it.
+The evidence behind them is uneven, so the table says, per gas, what the constants were fitted to, what was then tested against data nothing was fitted to, and where a value rests on assumption instead.
 
-| gas | molar volume (density correction) | gas-loaded brine density | viscosity factor |
+| gas | molar volume (the density correction) | gas-loaded brine density | viscosity factor |
 |---|---|---|---|
-| CO2 | calibrated 275-473 K (vibrating-tube volumes and CO2-water densities at measured loading); independent: Enns 1965, Hebach 2004 (model loading) | **independent**: Calabrese 2019 (275-449 K, to 100 MPa, 0.77 and 2.50 mol/kg) and Yan 2011 (323-413 K, to 40 MPa, 0-5 mol/kg), within 0.5% of density | calibrated 274-449 K to CO2-water and CO2-brine viscosities |
-| CH4 | calibrated 298-473 K; independent: O'Sullivan 1970 at 324.7 K (+2.8%) | none found; prediction only | calibrated 311-394 K (Ostermann 1985); extrapolated above |
-| H2S | calibrated 283-473 K; the Murphy-Gaines density reduction uses modelled dissolved amounts (H2S is near density-neutral, so the derived volume is weakly sensitive to them) | none found; prediction only | five ratios below 309 K; a constant, extrapolated above |
-| N2 | calibrated 276-298 K only; the trend above 298 K is the equation of state's; independent solubility-derived values sit 4.5 to 12% below the model | none found; prediction only | unity: a null measurement at x of order 1e-4, resolution about 2.5% |
-| H2 | calibrated at 298 K only (three determinations spanning 23.1 to 26.7 cm3/mol); independent: Bignell 1987 densities 5 to 16% below | none found; prediction only | unity: no measurement of either sign, so no correction is applied |
+| CO2 | fitted 275-473 K to measured volumes and CO2-water densities | **tested**: Calabrese 2019 and Yan 2011, within 0.5% of density, nothing fitted to them | fitted 274-449 K to CO2-water and CO2-brine viscosities |
+| CH4 | fitted 298-473 K; O'Sullivan 1970 sits +2.8% at 324.7 K | untested prediction; no measurement found | fitted 311-394 K (Ostermann 1985), extrapolated above |
+| H2S | fitted 283-473 K, the Murphy-Gaines part at modelled rather than measured loading | untested prediction; no measurement found | five ratios below 309 K, held constant above |
+| N2 | fitted 276-298 K only; above that the trend is the equation of state's, and solubility-derived values sit 4.5 to 12% below it | untested prediction; no measurement found | none applied: a null measured at x of order 1e-4 |
+| H2 | fitted at 298 K only, three determinations spanning 23.1 to 26.7 cm3/mol; Bignell 1987 sits 5 to 16% below | untested prediction; no measurement found | none applied: no measurement of either sign |
 
-The salinity factor on the molar volume is fitted to KCl dilatometry at 25 degC only and its magnitude is known to about a factor of two; the CO2 brine tests above exercise it, the other gases' brine predictions do not. The bundled viscosity baseline is validated separately from the gas factors: 0.300% (NaCl) and 0.764% (KCl) mean against Kestin's tables to 35 MPa; mixed salts 1.4% (KCl-CaCl2, Arshad 2020) and 1.6% (NaCl-CaCl2 below 323 K, Hoffert 2025) mean at atmospheric pressure, the latter conditional on which of that source's two pure-water series is the reference. Above 35 MPa the salt-ratio pressure factor is held at its 35 MPa value; on CaCl2 to 60 MPa it overstates the measured effect by 0.2 to 0.5%. No composition-resolved mixed-gas viscosity test exists.
+The salinity factor on the molar volume is fitted to KCl dilatometry at 25 degC alone and its magnitude is good to about a factor of two; only the CO2 brine tests exercise it. The viscosity baseline is tested on its own (0.300% mean against Kestin's NaCl tables, 0.764% on KCl, 1.4 to 1.6% on mixed salts at atmospheric pressure), but no mixed-brine viscosity at pressure and no composition-resolved mixed-gas viscosity has been measured to test against.
 
-The method is offered to about 450 K, 100 MPa, 5 mol/kg NaCl and a total dissolved mole fraction of about 0.05. Those maxima come from different datasets and are not a jointly tested rectangle; the CO2 brine tests reach x of about 0.03 and the model carries no composition dependence. Of the five gases only CO2 densifies brine at reservoir conditions; H2S is the closest to density-neutral, and in cold fresh water at atmospheric pressure its sign is within the data scatter. The paper's Table 5 lists each component's calibration range, test range and the consequence of its uncertainty.
-
-## Reproducing the results
-
-```bash
-python reproduce.py --quick    # the validation suite only (293 checks)
-python reproduce.py            # fits -> validation -> scorers -> figures -> examples
-```
-
-`reproduce.py` re-runs, in order, the validation suite, the dataset scorers behind the paper's tables, every fit that produced a shipped constant (each asserts the packaged value is its own output), the Ezrokhi tables, the worked examples and the figures. It then compares the regenerated result tables in `validation/results/` and `examples/tables/` field by field (numeric fields to a relative 1e-8) with the copies that were present before the run, reports any file that changed, appeared or disappeared, and exits non-zero on a failed step or a changed result. In a clean checkout those pre-run copies are the committed ones. **The full run rewrites those files and every figure in `figures/out/`, so run it in a disposable checkout.** Figures are regenerated but not compared (matplotlib output is not byte-stable across versions); printed outputs other than the compared tables are not checked. No PDF or PHREEQC installation is needed.
+The method is offered to about 450 K, 100 MPa, 5 mol/kg NaCl and a total dissolved mole fraction of about 0.05. Those maxima come from different datasets, so they are not a tested rectangle: the brine tests reach x of about 0.03, and the correction carries no composition dependence. Of the five gases only CO2 densifies brine at reservoir conditions; H2S is the closest to neutral, and in cold fresh water at atmospheric pressure its sign sits inside the data scatter. The paper's Table 5 gives each component's calibration range, test range and the consequence of its uncertainty.
 
 ## Repository guide
 
 ```
-brine_gas/      the delivered chain: IAPWS-IF97 water, Spivey and Pitzer gas-free density, the
-                PR volume route with its shifts and salinity factor, the mass-volume balance,
-                IAPWS-2008 viscosity, the ion-additive salt ratio (pitzer.dat vendored),
-                Kestin's pressure factor, the per-gas viscosity corrections
-data/           measured datasets as CSV or JSON, with PROVENANCE.md (source, DOI, table,
-                page, extraction method, exclusions) and references.bib; smaller published
-                tables live as arrays in the module that uses them, and PROVENANCE.md says which
+brine_gas/      the chain itself: IAPWS-IF97 water, gas-free brine density, the volume route
+                with its shifts and salinity factor, the mass-volume balance, IAPWS-2008
+                viscosity, the salt ratio, Kestin's pressure factor, the per-gas corrections
+data/           the measured datasets, with PROVENANCE.md and references.bib
 fits/           the fit behind every constant, run on the data in data/
-validation/     the validation suite (validation.py) and the dataset scorers; results/ holds
-                the result tables reproduce.py compares
+validation/     the validation suite and the per-dataset scorers; results/ holds the tables
+                reproduce.py compares
 figures/        figure generators; out/ holds the rendered figures (index: docs/FIGURES.md)
 examples/       the two worked examples; tables/ holds their printed tables
 docs/           METHOD.md, USAGE.md, SIMULATOR.md, FIGURES.md
 ```
-
-Module docstrings cite sources as `Papers/NN`; the numbering is listed at the end of [data/PROVENANCE.md](data/PROVENANCE.md) (the PDFs themselves are not distributed).
 
 ## Licence and citation
 
