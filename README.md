@@ -6,6 +6,8 @@ What it establishes, in one paragraph: the density change is a mass and volume b
 
 The repository is `brine_props`; the importable package is `brine_gas`.
 
+**If you only need the numbers, these calculations already ship in [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox).** `pyrestoolbox.brine.SoreideWhitson` flashes a gas mixture against brine and returns the gas-saturated density and viscosity in field or metric units, and `V_phi` and `brine_viscosity` expose the individual pieces. This repository is the reference implementation behind them: the same chain with the measured data, the fits that produced each constant, and the scripts that reproduce the paper.
+
 ## Installation
 
 Python 3.10 or later. There is no PyPI release of `brine_gas`; install from a source checkout:
@@ -17,7 +19,7 @@ python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\
 python -m pip install -e .
 ```
 
-This installs `numpy`, `scipy`, `pandas`, `matplotlib` and [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox) (`pyrestoolbox>=3.7.7`, which supplies the equation-of-state parameters and the flash). Tested environments, in which `python reproduce.py` passed and the examples below printed the numbers shown: Python 3.12.3 with numpy 2.5.2, scipy 1.18.1 and pyrestoolbox 3.7.7 from PyPI in a fresh virtual environment (Ubuntu on WSL2, 6 September 2026); an earlier build of this repository also reproduced under Python 3.11.16 with numpy 2.4.6, scipy 1.17.1 and pyrestoolbox 3.7.7. Not yet run on Windows or macOS. Minimum version bounds in `pyproject.toml` are not a pinned environment; if a result differs at the last printed digit, check those versions first.
+This installs `numpy`, `scipy`, `pandas`, `matplotlib` and [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox) (`pyrestoolbox>=3.7.7`, which supplies the equation-of-state parameters and the flash). `python reproduce.py` passes and the examples below print the numbers shown on Linux (Ubuntu on WSL2) under Python 3.11 and 3.12, not yet on Windows or macOS. `pyproject.toml` sets minimum versions, not a pinned environment, so if a result differs in its last digit check your `numpy`, `scipy` and `pyrestoolbox` versions first.
 
 ## First calculation: known dissolved amounts
 
