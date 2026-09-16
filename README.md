@@ -1,6 +1,6 @@
 # brine_props
 
-This package calculates how dissolved gases change brine density and viscosity, for CH4, CO2, H2S, N2 and H2. Its central purpose is the gas-induced correction, which applies on top of whatever gas-free brine density and viscosity models you already use; gas-free models (Spivey density, an IAPWS-based viscosity baseline) and an equilibrium-solubility workflow are also provided for a complete calculation. The repository holds the implementation, the measured data behind every fitted constant, and the scripts that reproduce the results of **Dissolved-Gas Corrections to Brine Density and Viscosity: A Single Method for CH4, CO2, H2S, N2 and H2** (Burgoyne, 2026, *Fluid Phase Equilibria*, submitted; not yet public), referred to below as the paper.
+This package calculates how dissolved gases change brine density and viscosity, for CH4, CO2, H2S, N2 and H2. Its central purpose is the gas-induced correction, which applies on top of whatever gas-free brine density and viscosity models you already use; gas-free models (Spivey density, an IAPWS-based viscosity baseline) and an equilibrium-solubility workflow are also provided for a complete calculation. The repository holds the implementation, the measured data behind every fitted constant, and the scripts that reproduce the results of **Dissolved-Gas Corrections to Brine Density and Viscosity: A Single Method for CH4, CO2, H2S, N2 and H2** (Burgoyne and Nielsen, 2026, *Fluid Phase Equilibria*, submitted; not yet public), referred to below as the paper.
 
 What it establishes, in one paragraph: the density change is a mass and volume balance (an identity) around one apparent molar volume per gas, which comes from the Peng-Robinson equation of state of the [Soreide-Whitson framework refresh](https://github.com/mwburgoyne/SW_Framework_Refresh) with one fitted volume shift per gas. CO2-loaded NaCl brine densities at measured dissolved amounts are reproduced within 0.5% of density with no parameter fitted to them. For the other four gases no gas-loaded brine density measurement exists; their predictions rest on molar volumes measured in water and a salinity factor fitted separately, and are combined here without a direct test. Viscosity uses one measured multiplicative factor per gas for CO2, CH4 and H2S; N2 and H2 are assigned no change. See [Validation coverage and limitations](#validation-coverage-and-limitations) before relying on a number.
 
@@ -140,4 +140,4 @@ Code: MIT ([LICENSE](LICENSE)). Data tables and figures: CC-BY-4.0 ([data/LICENS
 
 ## Author
 
-Mark Burgoyne.
+Mark Burgoyne. The method paper is co-authored with Markus H. Nielsen.
