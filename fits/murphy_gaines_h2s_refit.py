@@ -127,7 +127,7 @@ def vphi_slope_fit():
     numerically 2026-08-14: a fractional solubility bias growing linearly by
     30% of itself from 4.4 to 18 atm moves the fitted slope -15.1 -> -16.8,
     i.e. by under 2 cm3/mol per unit x, within the slope's own 3.3 standard
-    error (S&W's known bias level here is 4.5-9.2%). The slope is carried by
+    error (S&W runs 3.2-6.9% above Burgess & Germann here). The slope is carried by
     the measured densities, not by the flash.
 
     Returns a dict: slope and its standard error (cm3/mol per unit x), the
@@ -219,48 +219,82 @@ def x_h2s(t_degc, p_atm):
     return float(m.x['H2S'])
 
 
-def viscosity_coefficients():
-    """The five implied linear coefficients from Table IV on the B&G basis.
+def viscosity_coefficients(basis='companion'):
+    """The five implied linear coefficients from Table IV.
 
-    Returns (t_degC, P_atm, ratio, x_H2S, a) per row. The shipped a = 1.70 is
-    the mean of the four rows below 35 degC (the 35.2 degC ratio of 1.006 was
-    below the apparatus's resolution); the mean of all five is 1.41, and the
-    manuscript quotes 1.41-1.70 as the sensitivity range, labelling 1.70 a
-    deliberately conservative choice (2026-08-15, on the outcome-based-
-    exclusion challenge)."""
+    Returns (t_degC, P_atm, ratio, x_H2S, a) per row. basis='companion' takes
+    x_H2S from the S&W model the delivered chain uses in application, so that
+    a * x reproduces each measured increment when x comes from that model
+    (adopted 2026-10-21, FPE review R1.4). basis='bg' keeps Burgess & Germann
+    Table 5, the solubility source Murphy and Gaines used; three of its four
+    28-30 degC points extrapolate 1.9 degC below the table's lowest row."""
+    xfun = x_h2s if basis == 'companion' else x_h2s_burgess_germann
     rows = []
     for t, p, r in TABLE_IV:
-        x = x_h2s_burgess_germann(t, p)
+        x = xfun(t, p)
         rows.append((t, p, r, x, (r - 1.0) / x))
     return rows
 
 
+def adopted_coefficient():
+    """a by least squares through the origin on the measured increments, all
+    five points, companion-model loading. The 35.2 degC near-null is kept: its
+    exclusion was outcome-based (it removes the smallest value)."""
+    rows = viscosity_coefficients('companion')
+    x = np.array([r[3] for r in rows])
+    y = np.array([r[2] - 1.0 for r in rows])
+    return float(x @ y / (x @ x))
+
+
 def main():
     print('MURPHY & GAINES 1974, Table IV, refit from the primary source')
-    print('x_H2S basis: Burgess & Germann Table 5, the solubility source the')
-    print('paper itself used. (S&W puts x 4.5-9.2% high here, biasing a low.)\n')
+    print('x_H2S basis: the companion S&W model (default framework), the loading')
+    print('the delivered chain supplies; Burgess & Germann Table 5, the source the')
+    print('paper used, is printed alongside.\n')
+    bg = viscosity_coefficients('bg')
+    print('  S&W / B&G loading ratio at the five states: ' +
+          ', '.join(f'{c[3] / b[3]:.3f}' for c, b in zip(viscosity_coefficients(), bg)))
+    print(f'  B&G basis: implied a {min(r[4] for r in bg):.2f} to {max(r[4] for r in bg):.2f}, '
+          f'all-five mean {np.mean([r[4] for r in bg]):.3f}\n')
     print(f"  {'t degC':>7} {'P atm':>6} {'tau/tau0':>9} {'x_H2S':>8} {'implied a':>10}")
     print('  ' + '-' * 46)
     rows = viscosity_coefficients()
     for t, p, r, x, a in rows:
         print(f'  {t:7.1f} {p:6.1f} {r:9.3f} {x:8.5f} {a:10.3f}')
 
+    # Shipped statistics, generated and pinned 2026-10-21 (adversarial read:
+    # 1.37 +/- 0.28 and the 1.45 B&G-basis value had no generator).
+    for basis in ('companion', 'bg'):
+        rr = viscosity_coefficients(basis)
+        x = np.array([q[3] for q in rr]); y = np.array([q[2] - 1.0 for q in rr])
+        a_b = float(x @ y / (x @ x))
+        res = y - a_b * x
+        se = float(np.sqrt(res @ res / (len(x) - 1) / (x @ x)))
+        rms = 100 * float(np.sqrt(np.mean(res ** 2)))
+        print(f'  LS through origin, {basis} basis: a = {a_b:.3f} +/- {se:.3f} (1 SE), RMS {rms:.2f} pp')
+        if basis == 'companion':
+            assert abs(a_b - 1.369) < 5e-4 and abs(se - 0.279) < 5e-4 and abs(rms - 1.57) < 5e-3, (a_b, se, rms)
+        else:
+            assert abs(a_b - 1.448) < 5e-4, a_b
+
     a_all = np.array([r[4] for r in rows])
     a_28_30 = np.array([r[4] for r in rows if r[0] < 35])
     print(f'\n  implied a spans {a_all.min():.2f} to {a_all.max():.2f}')
     print(f'  mean of all five points          : {a_all.mean():.3f}')
-    print(f'  mean excluding the 35.2 degC null: {a_28_30.mean():.3f}  <- basis for the adopted value')
+    print(f'  mean excluding the 35.2 degC null: {a_28_30.mean():.3f}  (retired rule)')
+    print(f'  least squares through origin, all five: {adopted_coefficient():.3f}  <- ADOPTED')
 
     print('\n  exponent check (adopted coefficient refitted per form):')
     for b, label in ((1.0, 'b = 1 (SHIPPED)'), (1.0134, 'b = 1.0134 (borrowed, retired)')):
-        a_b = np.mean([(r - 1.0) / x ** b for t, _p, r, x, _a in rows if t < 35])
+        xx = np.array([r[3] for r in rows]) ** b
+        a_b = float(xx @ np.array([r[2] - 1.0 for r in rows]) / (xx @ xx))
         pred = [1 + a_b * r[3] ** b for r in rows]
         res = [100 * (p - r[2]) for p, r in zip(pred, rows)]
         print(f'    {label}: a = {a_b:.4f}, residuals ' +
               ', '.join(f'{v:+.2f} pp' for v in res) +
               f'   (RMS {np.sqrt(np.mean(np.square(res))):.3f} pp)')
     print('    The five points cannot distinguish the exponents; the linear')
-    print('    dilute-limit form ships with a = 1.70.')
+    print(f'    dilute-limit form ships with a = {adopted_coefficient():.2f}.')
 
     print('\n  APPARENT MOLAR VOLUME cross-check (their own measurement):')
     for label, T in (('21 degC', 294.15), ('40 degC', 313.15)):

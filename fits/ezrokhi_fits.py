@@ -280,7 +280,7 @@ def gas_viscosity_report(check=False):
     if check:
         assert abs(sets['CO2'][0][0] - 1.094) < 2e-3 and sets['CO2'][1] < 0.4, sets['CO2']
         assert abs(sets['CH4'][0][0] - 7.365) < 5e-3 and abs(sets['CH4'][1] - 3.60) < 0.05, sets['CH4']
-        assert abs(sets['H2S'][0][0] - 0.39086) < 1e-4 and sets['H2S'][1] < 0.01, sets['H2S']
+        assert abs(sets['H2S'][0][0] - 0.31657) < 1e-4 and sets['H2S'][1] < 0.01, sets['H2S']
         print('  pins hold')
     return sets
 

@@ -10,7 +10,7 @@ repository-code: https://github.com/mwburgoyne/brine_props
 license: MIT
 preferred-citation:
   type: article
-  title: "Dissolved-Gas Corrections to Brine Density and Viscosity: A Single Method for CH4, CO2, H2S, N2 and H2"
+  title: "Dissolved-Gas Corrections to Brine Density and Viscosity for CH4, CO2, H2S, N2 and H2"
   authors:
     - family-names: Burgoyne
       given-names: Mark W.

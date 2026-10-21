@@ -45,7 +45,7 @@ The baseline $\mu_b$ is the user's choice; the one supplied is IAPWS-2008 water,
 |---|---|---|---|
 | CO2 | $\exp[e_1 e^{-e_2(T/T_0-1)} x]$ | $e_1$ = 65.560, $e_2$ = 2.468, $T_0$ = 142 K | Calabrese et al. 2019 (CO2 slope from McBride-Wright et al. 2015 CO2-water measurements, 274-449 K, to 100 MPa) |
 | CH4 | $1 + A e^{B/T} x/(K + x)$ | $A$ = 1.7174e-03, $B$ = 1239.8 K, $K$ = 1.5286e-03 | 23 measurements of Ostermann et al. 1985, 311-394 K, 3.4-48 MPa; RMS 0.72 percentage points |
-| H2S | $1 + a x$ | $a$ = 1.70 | five ratios of Murphy and Gaines 1974, all below 309 K (the weakest calibration; 1.41-1.70 range) |
+| H2S | $1 + a x$ | $a$ = 1.37 | five ratios of Murphy and Gaines 1974, all below 309 K (the weakest calibration; implied values 0.25-2.07) |
 | N2 | 1 | --- | null resolved at $x \approx 10^{-4}$ |
 | H2 | 1 | --- | no measurement; no correction applied |
 

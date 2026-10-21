@@ -7,7 +7,8 @@ New experimental data: Tables 3 (solubility) and 4 (density), 323.2/373.2/413.2 
 
 Density leg (Mark's implied-V_phi directive): invert Garcia Eq. 18 per point for
 the V_phi that reproduces the measured density, using the MEASURED x_CO2
-(salt-free basis, as our implementation expects) and the Spivey gas-free baseline.
+(salt-free basis, as our implementation expects) and the Rowe-Chou gas-free
+baseline Yan calibrated against (Spivey before 2026-10-21; rowe_chou.py).
 Compare against Plyasunov V2inf(T,P) - trends in T, P, m; the m=1 and m=5 rows
 test the freshwater-V_phi-in-brine assumption to 5 mol/kg.
 
@@ -51,6 +52,7 @@ import numpy as np, pandas as pd
 from brine_gas.plyasunov_model import gas_mw
 from brine_gas.vphi_route import V_phi
 from brine_gas.brine_properties import rho_brine, salinity_from_molality, M_NACL
+from validation.rowe_chou import yan_baseline
 from brine_gas.water_properties import rho_w
 from pyrestoolbox import brine as rtb_brine
 
@@ -90,7 +92,9 @@ DATA = [
 rows = []
 for T, P, m, mco2, x, rho_meas in DATA:
     S = salinity_from_molality(m) if m > 0 else 0.0
-    rho1 = (rho_brine(T, P, S) if m > 0 else rho_w(T, P)) / 1000.0  # g/cm3
+    # Rowe-Chou for brine (2026-10-21): Yan calibrated against it, so it is the
+    # consistent baseline; Spivey differs by +0.22% at 413 K and 5 mol/kg.
+    rho1 = yan_baseline(T, P, m)  # g/cm3
     # Invert Garcia Eq. 18 for implied V_phi, per kg of water so the gas volume
     # is added to the FULL gas-free brine volume (see module docstring).
     Wb = 1000.0 + m * M_NACL          # gas-free brine mass per kg water, g
@@ -110,7 +114,7 @@ for T, P, m, mco2, x, rho_meas in DATA:
 df = pd.DataFrame(rows)
 
 print("=" * 78)
-print("DENSITY LEG - implied V_phi (cm3/mol), Garcia Eq. 18 inverted, Spivey baseline")
+print("DENSITY LEG - implied V_phi (cm3/mol), Garcia Eq. 18 inverted, Rowe-Chou baseline (Yan's own reference)")
 print("=" * 78)
 for m in (0, 1, 5):
     s = df[df.m == m]
@@ -121,6 +125,12 @@ print("\nModel V_phi (delivered route via vphi_route, freshwater): "
 
 print("\nV_phi model vs implied, % (positive = model high):")
 piv = df.pivot_table(index='m', columns='T_K', values='vphi_err_pct', aggfunc='mean').round(1)
+# Table 2 prints isotherm MEDIANS since 2026-10-21: at 413 K and 5 mol/kg the
+# 5 MPa point (-28%, measured increment negative) cancelled the rest in a mean.
+piv_med = df.pivot_table(index='m', columns='T_K', values='vphi_err_pct', aggfunc='median').round(1)
+print('V_phi model vs implied, isotherm medians (%):'); print(piv_med.to_string())
+_inc = df[df.m == 5].groupby('T_K')[['dfrac_meas_pp', 'dfrac_model_pp']].mean().round(3)
+print('5 mol/kg isotherm-mean increments, measured vs model (pp):'); print(_inc.to_string())
 print(piv.to_string())
 print(f"Overall: mean |err| {df.vphi_err_pct.abs().mean():.1f}%  bias {df.vphi_err_pct.mean():+.1f}%  max |err| {df.vphi_err_pct.abs().max():.1f}%")
 

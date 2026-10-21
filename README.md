@@ -2,7 +2,7 @@
 
 This package calculates how dissolved gases change brine density and viscosity, for CH4, CO2, H2S, N2 and H2. The gas correction is the product; it sits on top of whatever gas-free brine models you already use, and gas-free models (Spivey density, an IAPWS-based viscosity baseline) come bundled so a complete calculation runs out of the box.
 
-The repository holds the code, the measured data behind every fitted constant, and the scripts that reproduce **Dissolved-Gas Corrections to Brine Density and Viscosity: A Single Method for CH4, CO2, H2S, N2 and H2** (Burgoyne and Nielsen, 2026, *Fluid Phase Equilibria*, submitted; not yet public), called the paper below. The repository is `brine_props`; the importable package is `brine_gas`.
+The repository holds the code, the measured data behind every fitted constant, and the scripts that reproduce **Dissolved-Gas Corrections to Brine Density and Viscosity for CH4, CO2, H2S, N2 and H2** (Burgoyne and Nielsen, 2026, *Fluid Phase Equilibria*, submitted; not yet public), called the paper below. The repository is `brine_props`; the importable package is `brine_gas`.
 
 **If you only want the numbers, these calculations already ship in [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox).** `pyrestoolbox.brine.SoreideWhitson` flashes a gas mixture against brine and returns the gas-saturated density and viscosity in field or metric units. This repository is the reference implementation behind it, with the data and the fits alongside.
 
@@ -26,7 +26,7 @@ python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\
 python -m pip install -e .
 ```
 
-This installs `numpy`, `scipy`, `pandas`, `matplotlib` and [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox) (`pyrestoolbox>=3.7.7`, which supplies the equation-of-state parameters and the flash). Everything below has been run on Linux (Ubuntu on WSL2) under Python 3.11 and 3.12, not yet on Windows or macOS. `pyproject.toml` sets minimum versions rather than a pinned environment, so if a result differs in its last digit, check your `numpy`, `scipy` and `pyrestoolbox` versions first.
+This installs `numpy`, `scipy`, `pandas`, `matplotlib` and [pyResToolbox](https://github.com/mwburgoyne/pyResToolbox) (`pyrestoolbox>=3.8.9`, which supplies the equation-of-state parameters and the flash). Everything below has been run on Linux (Ubuntu on WSL2) under Python 3.11 and 3.12, not yet on Windows or macOS. `pyproject.toml` sets minimum versions rather than a pinned environment, so if a result differs in its last digit, check your `numpy`, `scipy` and `pyrestoolbox` versions first.
 
 ## Reproducing the paper
 
@@ -119,7 +119,7 @@ The evidence behind them is uneven, so the table says, per gas, what the constan
 
 | gas | molar volume (the density correction) | gas-loaded brine density | viscosity factor |
 |---|---|---|---|
-| CO2 | fitted 275-473 K to measured volumes and CO2-water densities | **tested**: Calabrese 2019 and Yan 2011, within 0.5% of density, nothing fitted to them | fitted 274-449 K to CO2-water and CO2-brine viscosities |
+| CO2 | fitted 275-473 K to measured volumes and CO2-water densities | **tested**: Calabrese 2019, Yan 2011, Song 2013 and Zhang 2011, nothing fitted to them (errors in total density and in the gas-induced change: paper Section 6) | fitted 274-449 K to CO2-water and CO2-brine viscosities |
 | CH4 | fitted 298-473 K; O'Sullivan 1970 sits +2.8% at 324.7 K | untested prediction; no measurement found | fitted 311-394 K (Ostermann 1985), extrapolated above |
 | H2S | fitted 283-473 K, the Murphy-Gaines part at modelled rather than measured loading | untested prediction; no measurement found | five ratios below 309 K, held constant above |
 | N2 | fitted 276-298 K only; above that the trend is the equation of state's, and solubility-derived values sit 4.5 to 12% below it | untested prediction; no measurement found | none applied: a null measured at x of order 1e-4 |

@@ -1,0 +1,137 @@
+part,set,subset,model,n,bias,mae,max,note,mae_pct_of_inc,inc_meas_mean,rho_mae_pct
+A,CH4,calibration,route,12,0.095665,1.4441,5.8595,,,,
+A,CH4,calibration,plyasunov,12,-0.076409,1.537,7.1023,,,,
+A,CH4,calibration,ad03,12,-5.9933,7.2686,13.513,,,,
+A,CH4,held-out,route,1,2.7778,2.7778,2.7778,,,,
+A,CH4,held-out,plyasunov,1,0.54322,0.54322,0.54322,,,,
+A,CH4,held-out,ad03,1,-0.57985,0.57985,0.57985,,,,
+A,CH4,source:Hnedkovsky 1996,route,10,-0.23105,0.90682,2.8015,,,,
+A,CH4,source:Hnedkovsky 1996,plyasunov,10,-0.6764,1.0086,1.6612,,,,
+A,CH4,source:Hnedkovsky 1996,ad03,10,-7.8823,7.8823,13.513,,,,
+A,CH4,source:Moore 1982 densimetry,route,1,5.8595,5.8595,5.8595,,,,
+A,CH4,source:Moore 1982 densimetry,plyasunov,1,7.1023,7.1023,7.1023,,,,
+A,CH4,source:Moore 1982 densimetry,ad03,1,7.6519,7.6519,7.6519,,,,
+A,CH4,source:Tiepel 1972 dilatometry,route,1,-2.4011,2.4011,2.4011,,,,
+A,CH4,source:Tiepel 1972 dilatometry,plyasunov,1,-1.2552,1.2552,1.2552,,,,
+A,CH4,source:Tiepel 1972 dilatometry,ad03,1,-0.74853,0.74853,0.74853,,,,
+A,CH4,LOSO,route,12,-0.99171,2.0571,6.3922,Hnedkovsky 1996: n=10 s=-0.0905 MAE 1.57%; Moore 1982 densimetry: n=1 s=-0.1183 MAE 6.39%; Tiepel 1972 dilatometry: n=1 s=-0.1084 MAE 2.62%,,,
+A,CO2,calibration,route,109,0.0093352,1.0573,5.0099,,,,
+A,CO2,calibration,plyasunov,109,-0.57051,5.3059,20.923,,,,
+A,CO2,calibration,ad03,109,-12.775,12.795,19.029,,,,
+A,CO2,calibration,garcia,109,1.4694,4.3551,13.172,,,,
+A,CO2,held-out,route,12,-3.3001,3.3001,5.9398,,,,
+A,CO2,held-out,plyasunov,12,-3.2857,3.6771,7.453,,,,
+A,CO2,held-out,ad03,12,-9.2714,9.2714,13.486,,,,
+A,CO2,held-out,garcia,12,-0.20676,2.7063,6.5379,,,,
+A,CO2,source:Hnedkovsky 1996,route,10,2.3314,2.3314,5.0099,,,,
+A,CO2,source:Hnedkovsky 1996,plyasunov,10,-0.53725,0.71319,1.807,,,,
+A,CO2,source:Hnedkovsky 1996,ad03,10,-10.739,10.739,16.227,,,,
+A,CO2,source:Hnedkovsky 1996,garcia,10,0.71295,3.5691,6.7429,,,,
+A,CO2,source:McBride-Wright 2015,route,98,-0.24534,0.92026,4.0728,,,,
+A,CO2,source:McBride-Wright 2015,plyasunov,98,-0.58135,5.827,20.923,,,,
+A,CO2,source:McBride-Wright 2015,ad03,98,-13.077,13.099,19.029,,,,
+A,CO2,source:McBride-Wright 2015,garcia,98,1.5089,4.427,13.172,,,,
+A,CO2,source:Moore 1982 densimetry,route,1,1.746,1.746,1.746,,,,
+A,CO2,source:Moore 1982 densimetry,plyasunov,1,0.15877,0.15877,0.15877,,,,
+A,CO2,source:Moore 1982 densimetry,ad03,1,-3.5882,3.5882,3.5882,,,,
+A,CO2,source:Moore 1982 densimetry,garcia,1,5.1685,5.1685,5.1685,,,,
+A,CO2,LOSO,route,109,-1.9803,2.4836,6.4938,Hnedkovsky 1996: n=10 s=-0.0733 MAE 2.56%; McBride-Wright 2015: n=98 s=-0.0390 MAE 2.48%; Moore 1982 densimetry: n=1 s=-0.0703 MAE 1.76%,,,
+A,H2S,calibration,route,34,-0.0071138,0.48355,1.3264,,,,
+A,H2S,calibration,plyasunov,34,-1.1296,1.4389,3.6585,,,,
+A,H2S,calibration,ad03,34,-3.4842,3.8787,14.883,,,,
+A,H2S,source:Barbero 1982,route,3,0.26556,0.26556,0.77553,,,,
+A,H2S,source:Barbero 1982,plyasunov,3,0.36987,2.0691,3.6585,,,,
+A,H2S,source:Barbero 1982,ad03,3,0.55884,2.6196,4.7677,,,,
+A,H2S,source:Hnedkovsky 1996,route,10,-0.36908,0.85277,1.2716,,,,
+A,H2S,source:Hnedkovsky 1996,plyasunov,10,-1.8798,2.0407,3.346,,,,
+A,H2S,source:Hnedkovsky 1996,ad03,10,-9.5129,9.5129,14.883,,,,
+A,H2S,source:Murphy & Gaines 1974,route,21,0.1263,0.33888,1.3264,,,,
+A,H2S,source:Murphy & Gaines 1974,plyasunov,21,-0.98655,1.0623,2.85,,,,
+A,H2S,source:Murphy & Gaines 1974,ad03,21,-1.191,1.3756,3.2763,,,,
+A,H2S,LOSO,route,34,0.081251,0.56908,1.4118,Barbero 1982: n=3 s=-0.0797 MAE 0.29%; Hnedkovsky 1996: n=10 s=-0.0776 MAE 0.94%; Murphy & Gaines 1974: n=21 s=-0.0820 MAE 0.43%,,,
+A,N2,calibration,route,5,0.059073,2.29,5.1108,,,,
+A,N2,calibration,plyasunov,5,3.2521,4.4325,9.7556,,,,
+A,N2,calibration,ad03,5,5.0705,5.1471,7.9106,,,,
+A,N2,held-out,route,4,7.7691,7.7691,11.899,,,,
+A,N2,held-out,plyasunov,4,6.1969,6.1969,12.17,,,,
+A,N2,held-out,ad03,4,8.4938,8.4938,13.893,,,,
+A,N2,source:Bignell 1984 (correlation),route,3,-0.75702,1.265,2.2474,,,,
+A,N2,source:Bignell 1984 (correlation),plyasunov,3,4.8465,4.8465,9.7556,,,,
+A,N2,source:Bignell 1984 (correlation),ad03,3,5.9652,5.9652,7.9106,,,,
+A,N2,source:Moore 1982 densimetry,route,1,-2.5443,2.5443,2.5443,,,,
+A,N2,source:Moore 1982 densimetry,plyasunov,1,-2.9511,2.9511,2.9511,,,,
+A,N2,source:Moore 1982 densimetry,ad03,1,-0.19156,0.19156,0.19156,,,,
+A,N2,source:Zhou 2001 dilatometry,route,1,5.1108,5.1108,5.1108,,,,
+A,N2,source:Zhou 2001 dilatometry,plyasunov,1,4.6721,4.6721,4.6721,,,,
+A,N2,source:Zhou 2001 dilatometry,ad03,1,7.6484,7.6484,7.6484,,,,
+A,N2,LOSO,route,5,-0.49594,3.0513,6.3884,Bignell 1984 (correlation): n=3 s=-0.1604 MAE 1.90%; Moore 1982 densimetry: n=1 s=-0.1673 MAE 3.18%; Zhou 2001 dilatometry: n=1 s=-0.1944 MAE 6.39%,,,
+A,H2,calibration,route,3,0.35479,5.1286,8.2251,,,,
+A,H2,calibration,plyasunov,3,4.644,6.2208,12.851,,,,
+A,H2,calibration,ad03,3,2.4641,5.3968,10.5,,,,
+A,H2,held-out,route,13,11.63,11.63,16.121,,,,
+A,H2,held-out,plyasunov,13,19.782,19.782,23.072,,,,
+A,H2,held-out,ad03,13,17.36,17.36,20.551,,,,
+A,H2,source:Moore 1982 densimetry,route,1,-6.3671,6.3671,6.3671,,,,
+A,H2,source:Moore 1982 densimetry,plyasunov,1,-2.3651,2.3651,2.3651,,,,
+A,H2,source:Moore 1982 densimetry,ad03,1,-4.399,4.399,4.399,,,,
+A,H2,source:Tiepel 1972 dilatometry,route,1,-0.79366,0.79366,0.79366,,,,
+A,H2,source:Tiepel 1972 dilatometry,plyasunov,1,3.4465,3.4465,3.4465,,,,
+A,H2,source:Tiepel 1972 dilatometry,ad03,1,1.2915,1.2915,1.2915,,,,
+A,H2,source:Zhou 2001 dilatometry,route,1,8.2251,8.2251,8.2251,,,,
+A,H2,source:Zhou 2001 dilatometry,plyasunov,1,12.851,12.851,12.851,,,,
+A,H2,source:Zhou 2001 dilatometry,ad03,1,10.5,10.5,10.5,,,,
+A,H2,LOSO,route,3,0.53221,7.6929,12.338,Moore 1982 densimetry: n=1 s=-0.1271 MAE 9.55%; Tiepel 1972 dilatometry: n=1 s=-0.1725 MAE 1.19%; Zhou 2001 dilatometry: n=1 s=-0.2359 MAE 12.34%,,,
+B,Yan 2011,m=0,route+salt,18,0.0082775,0.039268,0.08075,,5.5499,0.70756,0.038983
+B,Yan 2011,m=0,route,18,0.0082775,0.039268,0.08075,,5.5499,0.70756,0.038983
+B,Yan 2011,m=0,plyasunov+salt,18,0.13843,0.13843,0.25681,,19.565,0.70756,0.1373
+B,Yan 2011,m=0,plyasunov,18,0.13843,0.13843,0.25681,,19.565,0.70756,0.1373
+B,Yan 2011,m=0,ad03,18,0.52661,0.52661,0.96237,,74.426,0.70756,0.52283
+B,Yan 2011,m=0,garcia,18,0.17539,0.1771,0.32627,,25.03,0.70756,0.17604
+B,Yan 2011,m=1,route+salt,18,0.02322,0.043363,0.20763,,9.2004,0.47132,0.043152
+B,Yan 2011,m=1,route,18,-0.026147,0.059518,0.15831,,12.628,0.47132,0.059235
+B,Yan 2011,m=1,plyasunov+salt,18,0.12795,0.13195,0.36475,,27.996,0.47132,0.13122
+B,Yan 2011,m=1,plyasunov,18,0.080087,0.08869,0.3177,,18.818,0.47132,0.088194
+B,Yan 2011,m=1,ad03,18,0.39976,0.39976,0.68612,,84.818,0.47132,0.39779
+B,Yan 2011,m=1,garcia,18,0.11159,0.11159,0.2322,,23.676,0.47132,0.11113
+B,Yan 2011,m=5,route+salt,18,-0.11933,0.14748,0.25339,,66.579,0.22151,0.14713
+B,Yan 2011,m=5,route,18,-0.20693,0.23105,0.28666,,104.31,0.22151,0.2305
+B,Yan 2011,m=5,plyasunov+salt,18,-0.068732,0.099388,0.25814,,44.868,0.22151,0.099188
+B,Yan 2011,m=5,plyasunov,18,-0.15362,0.1783,0.27163,,80.493,0.22151,0.1779
+B,Yan 2011,m=5,ad03,18,0.011426,0.11488,0.31449,,51.86,0.22151,0.1147
+B,Yan 2011,m=5,garcia,18,-0.13535,0.16491,0.26601,,74.446,0.22151,0.1645
+B,Calabrese 2019,m=0.77,route+salt,104,0.15245,0.15245,0.33498,,57.673,0.26434,0.15206
+B,Calabrese 2019,m=0.77,route,104,0.1246,0.1246,0.30742,,47.137,0.26434,0.12429
+B,Calabrese 2019,m=0.77,plyasunov+salt,104,0.16457,0.22409,0.41749,,84.774,0.26434,0.22348
+B,Calabrese 2019,m=0.77,plyasunov,104,0.13686,0.20556,0.46072,,77.763,0.26434,0.20498
+B,Calabrese 2019,m=0.77,ad03,104,0.4237,0.4237,0.69713,,160.29,0.26434,0.42264
+B,Calabrese 2019,m=0.77,garcia,104,0.083625,0.12586,0.32762,,47.614,0.26434,0.12555
+B,Calabrese 2019,m=2.5,route+salt,103,-0.0081011,0.050014,0.46062,,22.648,0.22084,0.049901
+B,Calabrese 2019,m=2.5,route,103,-0.058543,0.077017,0.53548,,34.875,0.22084,0.076807
+B,Calabrese 2019,m=2.5,plyasunov+salt,103,-0.0018483,0.087677,0.43223,,39.703,0.22084,0.087442
+B,Calabrese 2019,m=2.5,plyasunov,103,-0.052083,0.091206,0.52002,,41.301,0.22084,0.090944
+B,Calabrese 2019,m=2.5,ad03,103,0.14035,0.14837,0.29589,,67.185,0.22084,0.14805
+B,Calabrese 2019,m=2.5,garcia,103,-0.087568,0.11605,0.5199,,52.55,0.22084,0.11572
+B,Song 2013,m=1,route+salt,75,0.0045865,0.047658,0.15438,,19.177,0.24852,0.047518
+B,Song 2013,m=1,route,75,-0.022506,0.042921,0.1958,,17.271,0.24852,0.042784
+B,Song 2013,m=1,plyasunov+salt,75,0.051562,0.072793,0.22072,,29.291,0.24852,0.072581
+B,Song 2013,m=1,plyasunov,75,0.025165,0.059528,0.18393,,23.953,0.24852,0.059344
+B,Song 2013,m=1,ad03,75,0.21246,0.21246,0.44771,,85.493,0.24852,0.2119
+B,Song 2013,m=1,garcia,75,0.082379,0.085609,0.21721,,34.448,0.24852,0.085396
+B,Song 2013,m=2,route+salt,75,-0.042222,0.067258,0.17983,,26.342,0.25532,0.067031
+B,Song 2013,m=2,route,75,-0.093085,0.093422,0.25182,,36.59,0.25532,0.093096
+B,Song 2013,m=2,plyasunov+salt,75,0.0060651,0.052133,0.13577,,20.419,0.25532,0.052004
+B,Song 2013,m=2,plyasunov,75,-0.043497,0.055427,0.1311,,21.709,0.25532,0.055249
+B,Song 2013,m=2,ad03,75,0.15182,0.16008,0.40974,,62.696,0.25532,0.15974
+B,Song 2013,m=2,garcia,75,0.016351,0.083582,0.18868,,32.736,0.25532,0.083362
+B,Song 2013,m=3,route+salt,75,-0.10323,0.10323,0.36491,,35.977,0.28694,0.10279
+B,Song 2013,m=3,route,75,-0.17534,0.17534,0.46766,,61.109,0.28694,0.17467
+B,Song 2013,m=3,plyasunov+salt,75,-0.0535,0.061618,0.23978,,21.474,0.28694,0.061354
+B,Song 2013,m=3,plyasunov,75,-0.12377,0.12377,0.33794,,43.134,0.28694,0.1233
+B,Song 2013,m=3,ad03,75,0.078918,0.12659,0.27337,,44.117,0.28694,0.12621
+B,Song 2013,m=3,garcia,75,-0.061988,0.078794,0.36788,,27.46,0.28694,0.078422
+B,Song 2013,m=4,route+salt,75,0.015054,0.07368,0.21174,,57.223,0.12876,0.073591
+B,Song 2013,m=4,route,75,-0.075233,0.089163,0.29994,,69.249,0.12876,0.088932
+B,Song 2013,m=4,plyasunov+salt,75,0.065611,0.084934,0.23324,,65.964,0.12876,0.084868
+B,Song 2013,m=4,plyasunov,75,-0.022365,0.058127,0.23447,,45.145,0.12876,0.058008
+B,Song 2013,m=4,ad03,75,0.18497,0.18837,0.51158,,146.3,0.12876,0.18827
+B,Song 2013,m=4,garcia,75,0.040731,0.088148,0.26387,,68.46,0.12876,0.088076

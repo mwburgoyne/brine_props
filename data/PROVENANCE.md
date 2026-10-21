@@ -11,7 +11,8 @@ Every measured value the fits, validation and figures consume is either a CSV or
 | N2 partial molar volume 3-21 degC (magnetic float) | `fits/fit_pr_vshift.py` (`bignell_n2`) | Bignell 1984, J. Phys. Chem. 88:5409 | 10.1021/j150666a060 | three points sampled from his correlation inside his window |
 | H2S infinite-dilution volumes at 283, 298 and 313 K (vibrating tube) | `fits/fit_pr_vshift.py` (`BARBERO_H2S`) | Barbero, McCurdy and Tremaine 1982, Can. J. Chem. 60:1872, Table 1 | 10.1139/v82-260 | calibration set; raw densities are in a CISTI depository, not printed |
 | H2S in water: densities, viscosities and solubility-derived volumes, 294-314 K | `fits/murphy_gaines_h2s_refit.py` (Tables I, IV) | Murphy and Gaines 1974, J. Chem. Eng. Data 19:359 | 10.1021/je60063a015 | Table I re-reduced to V_phi with dissolved amounts from the Soreide-Whitson flash (loading not measured; a retained calibration exception, H2S being near density-neutral); Table IV viscosity ratios |
-| H2S solubility used for the Murphy-Gaines viscosity mole fractions | `fits/murphy_gaines_h2s_refit.py` | Burgess and Germann 1969, AIChE J. 15:272 | 10.1002/aic.690150226 | |
+| H2S solubility, Murphy and Gaines's own source; the basis-sensitivity refit of the viscosity coefficient | `fits/murphy_gaines_h2s_refit.py` (`viscosity_coefficients('bg')`) | Burgess and Germann 1969, AIChE J. 15:272 | 10.1002/aic.690150227 | the shipped coefficient uses the companion model's loading |
+| Evaluated H2S solubility in water, 303-313 K (Lee and Mather 1977; Selleck et al. 1952) | `validation/h2s_solubility_lee_mather.py` | IUPAC Solubility Data Series vol. 32 (Fogg and Young 1988), pp. 9, 15, 31 | see references.bib | test of the H2S loading basis, nothing fitted |
 | Solubility-derived volumes of N2 and CH4 in water and NaCl, 324.7 K | `fits/fit_pr_vshift.py` (`HELD_OUT`), `validation/validation.py` | O'Sullivan and Smith 1970, J. Phys. Chem. 74:1460 | 10.1021/j100702a012 | held out, never fitted |
 | Solubility-derived volumes of N2, CO2 and O2 (sea water) | `fits/fit_pr_vshift.py` (`HELD_OUT`), `fits/salt_effect_vphi.py` | Enns, Scholander and Bradstreet 1965, J. Phys. Chem. 69:389 | see references.bib | held out |
 | CO2 finite-loading volumes at 273 K | `fits/fit_pr_vshift.py` (`HELD_OUT`) | Lauder 1959 | see references.bib | shown, not scored |
@@ -21,6 +22,9 @@ Every measured value the fits, validation and figures consume is either a CSV or
 | CO2-water densities at three measured loadings, 274.7-449 K, 15-100 MPa | `data/mcbridewright2015_table5_density.csv` | McBride-Wright, Maitland and Trusler 2015, J. Chem. Eng. Data 60:171, Table 5 | 10.1021/je5009125 | coordinate-parsed and page-checked; reduced to CO2 volumes in `validation/mcbridewright2015_density_check.py`; in the CO2 calibration set (n = 109) since the point-weighted refit |
 | CO2-saturated water densities, 283-333 K, 1-31 MPa (203 rows, 39 on the coexistence line) | `data/hebach2004_table1_density.csv` | Hebach, Oberhof and Dahmen 2004, J. Chem. Eng. Data 49:950, Table 1 | 10.1021/je034260i | coordinate-parsed and page-checked row by row; loading from the flash, so held out; reduced in `validation/hebach2004_density_check.py` |
 | CO2-water viscosities, 294-449 K, 15-96 MPa | `data/mcbridewright2015_table7_viscosity.csv` | McBride-Wright, Maitland and Trusler 2015, J. Chem. Eng. Data 60:171, Table 7 | 10.1021/je5009125 | as above |
+| CO2-loaded NaCl brine densities, 333-413 K, 10-18 MPa, 1-4 mol/kg, prepared loading, same-campaign gas-free baselines | `data/song2013_data.csv`, `validation/song2013_validation.py` | Song, Zhan, Zhang, Liu, Jian, Liu and Wang 2013, J. Chem. Eng. Data 58:3342 (via NIST ThermoML) | 10.1021/je400459y | 300 loaded + 100 gas-free densities, nothing fitted |
+| CO2-loaded dilute reservoir brine densities, 313-353 K, 10-18 MPa | `data/zhang2011_data.csv`, `validation/zhang2011_validation.py` | Zhang, Chang, Song, Zhao, Zhan and Jian 2011, J. Chem. Eng. Data 56:565 | 10.1021/je101214e | 97 loaded + 25 gas-free densities, nothing fitted |
+| NaCl brine volumes, the gas-free baseline Yan et al. calibrated against | `validation/rowe_chou.py` | Rowe and Chou 1970, J. Chem. Eng. Data 15:61 | 10.1021/je60044a016 | correlation, used as published |
 | CO2-saturated NaCl brine density and solubility, 323-413 K, 5-40 MPa, 0-5 mol/kg | `validation/yan2011_validation.py` (Tables 3, 4) | Yan, Huang and Stenby 2011, Int. J. Greenh. Gas Control 5:1460 | 10.1016/j.ijggc.2011.08.004 | 54 densities |
 | CH4-saturated water viscosity ratios, 311-394 K, 3.4-48 MPa | `fits/ostermann_ch4_refit.py` (`OSTERMANN`) | Ostermann, Bloori and Dehghani 1985, SPE 14211 | 10.2118/14211-MS | 23 points with solution gas-water ratio |
 | C2H6 null and CH4 scatter | `fits/ostermann_ch4_refit.py` | Ostermann, Paranjpe, Godbole and Kamath 1986, SPE 15081 | 10.2118/15081-MS | |
@@ -109,3 +113,9 @@ Module docstrings cite sources as `Papers/NN`, the numbering of the source direc
 | 60 | Abdulagatov Azizov 2006 CaCl2 viscosity 293-575K 60MPa |
 | 61 | Bignell 1987 H2 Ar mixed gas water density 3-25C |
 | 62 | Barbero 1982 H2S NaHS Vphi Cp 10-40C |
+| 63 | RoweChou 1970 NaCl PVTx 0-175C 350kgcm2 |
+| 64 | Mao 2010 CO2-CH4-C2H6-N2-H2O-NaCl PVTx Helmholtz |
+| 65 | ZiabakhshGanjiKooi 2012 gas-mixture brine solubility |
+| 66 | BattistelliMarcolini 2009 TMGAS TOUGH2 gas mixtures |
+| 67 | Song 2013 CO2-H2O-NaCl density MSB 333-413K 1-4m |
+| 68 | Zhang 2011 CO2 Tianjin brine density MSB procedure |

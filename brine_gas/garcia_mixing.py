@@ -200,10 +200,10 @@ def density_mixed_gas(gas_dict, T, P, rho1=None, S=0.0, route=DEFAULT_ROUTE):
 #        Plateau above ~2000 psi; T-dependent, not mole-fraction-dependent.
 #
 #   H2S: Murphy & Gaines (1974), J. Chem. Eng. Data 19(4), 359-362
-#        mu = mu_brine * (1 + 1.70 * x_H2S)
+#        mu = mu_brine * (1 + 1.37 * x_H2S)
 #        Calibrated from 3-6% increase near saturation at 28-30 degC.
-#        x_H2S from Burgess & Germann (1969), the solubility source the paper
-#        itself used. Implied 'a' spans 0.26 to 2.20 across the 5 data points
+#        x_H2S from the companion S&W model (the loading applied in use).
+#        Implied 'a' spans 0.25 to 2.07 across the 5 data points
 #        (large scatter; authors note the effect is "only slightly more than
 #        experimental error").
 #        T-dependence unresolved: the 35 degC M&G point implies near-zero, but
@@ -232,7 +232,8 @@ def density_mixed_gas(gas_dict, T, P, rho1=None, S=0.0, route=DEFAULT_ROUTE):
 #      prints 1.038. Reading the paper gave 1.64.
 #   2. Murphy & Gaines report no mole fractions; they state their H2S solubility
 #      came from Burgess & Germann (1969), AIChE J 15:272 (Papers/34). Using
-#      Soreide-Whitson instead put x_H2S 4.5 to 9.2% HIGH against that source,
+#      Soreide-Whitson instead put x_H2S 4.5 to 9.2% HIGH against that source
+#      (3.2 to 6.9% with the default framework; 4.5-9.2 was an mc3-era figure),
 #      and since a scales as 1/x it biased the coefficient low by the same
 #      amount. Re-basing on Burgess & Germann Table 5 (image-verified) gives the
 #      implied coefficients 2.20, 1.47, 1.89, 1.25 and 0.26, and the adopted
@@ -250,7 +251,11 @@ def density_mixed_gas(gas_dict, T, P, rho1=None, S=0.0, route=DEFAULT_ROUTE):
 # hydrate boundary, which is presumably why the table stops where it does. The
 # 9% change is immaterial against the 0.26 to 2.20 spread of the five points;
 # the value follows the sources. See code/murphy_gaines_h2s_refit.py.
-_H2S_A = 1.70          # Murphy & Gaines Table IV on Burgess & Germann solubility
+# RE-BASED 2026-10-21 (FPE review R1.4): x now from the companion S&W model the
+# chain supplies in application, and a fitted by least squares through the
+# origin over all five points (the four-point rule excluded the near-null on its
+# outcome). On this basis no point needs the B&G table extrapolated.
+_H2S_A = 1.37          # Murphy & Gaines Table IV on companion-model (S&W default) loading
 
 # Calabrese et al. (2019) Eq. 25 for CO2 (JCED 64:3831, DOI 10.1021/acs.jced.9b00248):
 # ln(eta/eta_brine) = e1 * exp(-e2*(T/T0 - 1)) * x_CO2
@@ -527,11 +532,11 @@ if __name__ == "__main__":
         co2_vis = viscosity_correction_single('CO2', 0.02, degf=degf_co2)
         print(f"CO2 at x=0.02, {degf_co2} degF: factor = {co2_vis:.6f}")
 
-    # H2S: Murphy & Gaines calibrated (a=1.70, linear)
+    # H2S: Murphy & Gaines calibrated (a=1.37, linear)
     h2s_vis_005 = viscosity_correction_single('H2S', 0.05)
     h2s_vis_020 = viscosity_correction_single('H2S', 0.20)
-    print(f"H2S at x=0.05: factor = {h2s_vis_005:.6f} (expect ~+8.5% increase)")
-    print(f"H2S at x=0.20: factor = {h2s_vis_020:.6f} (expect ~+34%)")
+    print(f"H2S at x=0.05: factor = {h2s_vis_005:.6f} (expect ~+6.9% increase)")
+    print(f"H2S at x=0.20: factor = {h2s_vis_020:.6f} (expect ~+27%)")
 
     # CH4: Ostermann plateau values
     print("\nCH4 unified Arrhenius x Langmuir, ratio vs x and T:")

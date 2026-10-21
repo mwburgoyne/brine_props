@@ -493,14 +493,16 @@ def test_viscosity_corrections():
           abs(r2 / r1 - 2.0) < 1e-3, f"ratio={r2/r1:.6f}")
 
 
-    # --- H2S: our own fit to Murphy & Gaines Table IV, a=1.70, linear in x.
+    # --- H2S: our own fit to Murphy & Gaines Table IV, linear in x (a=1.70 until
+    # 2026-10-21, now 1.37; the pins below were re-set then).
     # Re-pinned 2026-07-31 when the exponent was set to unity (1.0134 was
     # borrowed from Islam-Carlson's CO2 fit, never fitted to H2S, and the five
     # points cannot distinguish exponents: RMS 1.740 vs 1.738 pp). Previously
     # re-pinned 2026-07-25 (a=1.79 on the Burgess & Germann solubility basis).
     # Pinned by value, not by comment - a stale comment here once sat two
     # revisions behind the code.
-    for x, expected in [(0.03, 1.051), (0.05, 1.085)]:
+    # Re-pinned 2026-10-21: a = 1.37 on companion-model loading (FPE R1.4).
+    for x, expected in [(0.03, 1.0411), (0.05, 1.0685)]:
         f = viscosity_correction_single('H2S', x)
         check(f"H2S factor at x={x} = {f:.6f}", abs(f - expected) < 1e-5,
               f"got {f:.8f}, expected {expected}")
@@ -519,7 +521,7 @@ def test_viscosity_corrections():
     check(f"mixed factor is the product of singles ({combined:.6f})",
           abs(combined - product) < 1e-12)
     check(f"mixed factor at 150 degF = {combined:.6f}",
-          abs(combined - 1.079422) < 1e-5, f"got {combined:.8f}")
+          abs(combined - 1.078359) < 1e-5, f"got {combined:.8f}")
 
     # --- degf is mandatory for the two T-dependent corrections
     for gas in ('CO2', 'CH4'):
@@ -760,21 +762,22 @@ def test_independent_evidence():
           and sf['excess_mass_sloped'] < 0
           and abs(sf['density_move_pct']) < 0.15)
 
-    # H2S VISCOSITY SENSITIVITY RANGE (2026-08-15, ChatGPT-review challenge:
-    # excluding the near-null 35.2 degC point because it is small is outcome-
-    # based). The shipped a = 1.70 stays, relabelled a deliberately conservative
-    # choice; the manuscript now quotes the all-five mean 1.41 and the
-    # 1.41-1.70 range as ~0.9 pp of viscosity at x = 0.03.
-    from fits.murphy_gaines_h2s_refit import viscosity_coefficients
+    # H2S VISCOSITY COEFFICIENT (re-based 2026-10-21, FPE review R1.4): loading
+    # from the companion S&W model, least squares through the origin over all
+    # five Murphy-Gaines ratios. The retired rule (mean of four on Burgess &
+    # Germann, 1.70) excluded the near-null on its outcome.
+    from fits.murphy_gaines_h2s_refit import viscosity_coefficients, adopted_coefficient
+    import brine_gas.garcia_mixing as G
     vc = viscosity_coefficients()
-    a_all5 = np.mean([r[4] for r in vc])
-    a_four = np.mean([r[4] for r in vc if r[0] < 35])
-    sens_pp = (a_four - a_all5) * 0.03 * 100.0
-    check(f"H2S viscosity coefficients: all-five mean {a_all5:.2f}, four-point "
-          f"{a_four:.2f} (shipped 1.70), range worth {sens_pp:.2f} pp at x=0.03",
-          abs(a_all5 - 1.41) < 0.005 and abs(a_four - 1.70) < 0.005
-          and 0.8 < sens_pp < 1.0,
-          f"all5={a_all5:.3f} four={a_four:.3f} sens={sens_pp:.3f}")
+    a_ls = adopted_coefficient()
+    a_lo, a_hi = min(r[4] for r in vc), max(r[4] for r in vc)
+    ratio = [c[3] / b[3] for c, b in zip(vc, viscosity_coefficients('bg'))]
+    check(f"H2S viscosity coefficient {a_ls:.3f} (shipped {G._H2S_A:.2f}); five implied "
+          f"{a_lo:.2f}-{a_hi:.2f}; S&W/B&G loading {min(ratio):.3f}-{max(ratio):.3f}",
+          abs(a_ls - 1.369) < 0.0005 and abs(G._H2S_A - 1.37) < 1e-12
+          and abs(a_lo - 0.25) < 0.005 and abs(a_hi - 2.07) < 0.005
+          and abs(min(ratio) - 1.032) < 0.0005 and abs(max(ratio) - 1.069) < 0.0005,
+          f"a={a_ls:.4f} lo={a_lo:.3f} hi={a_hi:.3f} ratio={min(ratio):.4f}-{max(ratio):.4f}")
 
     # EZROKHI DEFAULT, a2 AS PRINTED (2026-08-15). The tNavigator table prints
     # CO2 a2 unsigned; the manuscript adopts the negative reading and now also

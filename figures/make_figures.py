@@ -115,7 +115,8 @@ def _sw(degc, bar, ppm, **kw):
 # ===========================================================================
 # FIG 1  Who densifies, who lightens, and how it fades with temperature
 # ===========================================================================
-def fig_density_signature():
+def _density_curves():
+    """Saturated-brine density change (%) vs T (degC) per gas, 300 bar, 1 m NaCl."""
     bar, m = 300.0, 1.0
     ppm = m * M_NACL / (1000 + m * M_NACL) * 1e6
     temps = np.arange(30, 181, 10.0)
@@ -127,7 +128,6 @@ def fig_density_signature():
     # Sized for the note's 3.9-inch side-by-side column (72% display scale),
     # which also suits the manuscript at \textwidth; fonts are set to survive
     # that reduction, and the two half-plane cues carry the sign story.
-    fig, ax = plt.subplots(figsize=(5.6, 3.8))
     curves = {}
     for gas, kw in cases.items():
         eff = []
@@ -139,6 +139,13 @@ def fig_density_signature():
             except Exception:
                 eff.append(np.nan)
         curves[gas] = np.array(eff)
+    return temps, curves
+
+
+def fig_density_signature():
+    temps, curves = _density_curves()
+    fig, ax = plt.subplots(figsize=(5.6, 3.8))
+    for gas in curves:
         ax.plot(temps, curves[gas], color=GAS_COLOUR[gas], lw=2.4,
                 solid_capstyle='round')
 
@@ -315,11 +322,12 @@ def _yan_data():
 
 
 def fig_validation_parity():
+    from validation.rowe_chou import yan_baseline
     M2 = gas_mw('CO2')
     pts = {0: [], 1: [], 5: []}
     for T, P, m, mco2, x, rho_meas in _yan_data():
         S = salinity_from_molality(m) if m > 0 else 0.0
-        rb = (rho_brine(T, P, S) if m > 0 else rho_w(T, P)) / 1000.0
+        rb = yan_baseline(T, P, m)  # Rowe-Chou, Yan's own reference
         Wb = 1000.0 + m * M_NACL
         V = V_phi('CO2', T, P, 'auto', m)
         rho_mod = (Wb + mco2 * M2) / (Wb / rb + mco2 * V)
@@ -748,14 +756,12 @@ def fig_viscosity_evidence():
     ch4 = {'Ostermann, water': [(100.0 * e, 100.0 * (viscosity_correction_single('CH4', x, f) - 1.0))
                                  for x, e, f in zip(X, E, F)]}
     panels.append(('CH$_4$', ch4, {'Ostermann, water': ('o', True)}))
-    # H2S: the five Murphy & Gaines ratios; four fitted, the 35.2 degC one
-    # below the apparatus resolution and excluded
-    h2s = {'Murphy-Gaines, fitted': [], 'Murphy-Gaines, unresolved': []}
+    # H2S: the five Murphy & Gaines ratios, all fitted since 2026-10-21 (the
+    # 35.2 degC near-null is kept; it was shown open, as excluded, before then)
+    h2s = {'Murphy-Gaines, water': []}
     for t, p_atm, r, x, a in viscosity_coefficients():
-        key = 'Murphy-Gaines, unresolved' if t > 35.0 else 'Murphy-Gaines, fitted'
-        h2s[key].append((100.0 * (r - 1.0), 100.0 * (viscosity_correction_single('H2S', x) - 1.0)))
-    panels.append(('H$_2$S', h2s, {'Murphy-Gaines, fitted': ('o', True),
-                                   'Murphy-Gaines, unresolved': ('o', False)}))
+        h2s['Murphy-Gaines, water'].append((100.0 * (r - 1.0), 100.0 * (viscosity_correction_single('H2S', x) - 1.0)))
+    panels.append(('H$_2$S', h2s, {'Murphy-Gaines, water': ('o', True)}))
 
     fig, axes = plt.subplots(1, 3, figsize=(10.5, 3.6))
     report = []
@@ -791,6 +797,82 @@ def fig_viscosity_evidence():
         print(f'  {g:<5}{name:<30}{n:>4}{rms:>8.2f}')
     return report
 
+# ===========================================================================
+# Graphical abstract (FPE revision 1): replaces the submitted one, which led
+# with the 29% solvent-basis figure. Written to manuscript/revision1/.
+# ===========================================================================
+def fig_graphical_abstract():
+    from validation.model_comparison import brine_points
+    import validation.zhang2011_validation as ZH
+    M2 = gas_mw('CO2')
+    sets = {}                                   # dataset -> [(meas %, pred %, rho err %)]
+    for ds, m, T, P, n2, rho, rho1 in brine_points():
+        Wb = 1000.0 + m * M_NACL
+        V = float(V_phi('CO2', T, min(P, 100.0), 'auto', m))   # IF97 limit, as model_comparison
+        rmod = (Wb + n2 * M2) / (Wb / rho1 + n2 * V)
+        sets.setdefault(ds, []).append((100 * (rho / rho1 - 1), 100 * (rmod / rho1 - 1), 100 * (rmod / rho - 1), m))
+    z = ZH.score()
+    sets['Zhang 2011'] = [(a, b, c, ZH.M_EQ) for a, b, c in zip(z.inc_meas, z.inc_mod, z.rho_err)]
+    temps, curves = _density_curves()
+
+    fig = plt.figure(figsize=(13.0, 5.0))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.25, 1.0], left=0.06, right=0.98,
+                          top=0.80, bottom=0.19, wspace=0.22)
+    ax = fig.add_subplot(gs[0])
+    for gas, y in curves.items():
+        ax.plot(temps, y, color=GAS_COLOUR[gas], lw=2.6, solid_capstyle='round')
+        i = np.isfinite(y).nonzero()[0][-1]
+        ax.annotate(GAS_LABEL[gas], (temps[i], y[i]), xytext=(5, 0), textcoords='offset points',
+                    color=GAS_COLOUR[gas], fontsize=11, fontweight='bold', va='center')
+    ax.axhline(0, color=NAVY, lw=1.1, zorder=1)
+    ax.set_xlim(25, 200)
+    ax.xaxis.set_major_locator(MultipleLocator(30))
+    _style(ax, 'Gas-saturated brine vs gas-free brine (30 MPa, 1 mol/kg NaCl)',
+           'Temperature (°C)', 'Density change (%)')
+    ax.text(0.99, 0.97, 'denser than gas-free brine', transform=ax.transAxes, ha='right', va='top',
+            fontsize=9.5, color=MUTED)
+    ax.text(0.02, 0.03, 'lighter', transform=ax.transAxes, ha='left', va='bottom',
+            fontsize=9.5, color=MUTED)
+
+    ax = fig.add_subplot(gs[1])
+    # all four sets are CO2, so colour stays CO2's and the dataset is carried by
+    # marker shape and fill (colour follows the entity, here the gas)
+    c = GAS_COLOUR['CO2']
+    style = {'Yan 2011': ('o', True), 'Calabrese 2019': ('s', False),
+             'Song 2013': ('^', False), 'Zhang 2011': ('D', True)}
+    allv = [v for pts in sets.values() for p in pts for v in p[:2]]
+    lo, hi = min(allv) - 0.1, max(allv) + 0.1
+    ax.plot([lo, hi], [lo, hi], color=NAVY, lw=1.0, zorder=1)
+    worst = 0.0
+    for ds, (mk, filled) in style.items():
+        a = np.array(sets[ds])
+        mae = np.abs(a[:, 2]).mean()
+        for m in np.unique(a[:, 3]):                # worst salinity subset, as the abstract
+            worst = max(worst, np.abs(a[a[:, 3] == m, 2]).mean())
+        ax.scatter(a[:, 0], a[:, 1], s=28, marker=mk, facecolor=c if filled else SURFACE,
+                   edgecolor=c if not filled else SURFACE, linewidth=1.0 if not filled else 0.5,
+                   label=f'{ds} (n={len(a)}, {mae:.2f}%)', zorder=3, alpha=0.85)
+    ax.set_xlim(lo, hi); ax.set_ylim(lo, hi); ax.set_aspect('equal')
+    _style(ax, 'CO$_2$-loaded brine, measured or prepared loading',
+           'Measured density increase (%)', 'Predicted (%)')
+    leg = ax.legend(fontsize=8.5, loc='upper left', title='dataset (n, mean abs. density error)',
+                    title_fontsize=8.5, frameon=False)
+    fig.text(0.06, 0.94, 'Dissolved CH$_4$, CO$_2$, H$_2$S, N$_2$ and H$_2$: brine density and viscosity corrections',
+             fontsize=15, fontweight='bold', color=NAVY)
+    fig.text(0.06, 0.875, 'Density: mass and volume balance, gas volume from the solubility equation of state with one '
+             'shift per gas.  Viscosity: measured per-gas factors (CO$_2$, CH$_4$, H$_2$S).',
+             fontsize=10.5, color=NAVY)
+    fig.text(0.06, 0.012, f'Four independent CO$_2$ datasets, 0-5 mol/kg NaCl: total density within {worst:.2f}% mean absolute '
+             'error at every salinity.\nNo brine-density measurement at known loading exists for CH$_4$, H$_2$S, N$_2$ or H$_2$; '
+             'their predictions rest on freshwater volumes.', fontsize=9.5, color=MUTED, linespacing=1.4)
+    out = os.path.join(_FIGOUT, 'graphical_abstract')
+    fig.savefig(out + '.pdf')
+    fig.savefig(out + '.png', dpi=200)
+    plt.close(fig)
+    print('wrote', out + '.pdf/.png; worst dataset density MAE', round(worst, 3))
+    return sets
+
+
 if __name__ == '__main__':
     fig_workflow_delta()
     fig_salt_fraction()
@@ -802,3 +884,4 @@ if __name__ == '__main__':
     fig_vphi_vs_data()
     fig_ch4_ramp()
     fig_solvent_basis()
+    fig_graphical_abstract()
