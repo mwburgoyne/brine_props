@@ -795,28 +795,26 @@ def test_independent_evidence():
           abs(_ep - 0.380) < 0.002 and abs(_ec - 0.162) < 0.002 and len(_df) == 261,
           f"printed={_ep:.4f} corrected={_ec:.4f} n={len(_df)}")
 
-    # COMPOSITION CEILING (2026-08-15). The Discussion carries the measured CO2
-    # slope (-117, Calabrese 0.77 m inversion, loadings below x = 0.016)
-    # linearly to the x = 0.05 ceiling as a worst case: near 5.9 cm3/mol on
-    # V_phi, about 1.6% of density - several times the 0.40 pp worst end-to-end
-    # validation error, NOT "at the size of the quoted accuracy" (the
-    # superseded framing, banned in check_deliverable_numbers).
-    from validation.salt_term_magnitude_dig import DVDX
+    # COMPOSITION CEILING (2026-08-15; slope switched 2026-10-22). The
+    # Discussion carries a measured CO2 composition slope linearly to the
+    # x = 0.05 ceiling as a sensitivity. It was the Calabrese 0.77 m -117; that
+    # slope is the gas-free baseline offset (brine_offset_analysis.py: intercept
+    # -0.114 pp in all 29 states, slope +53 once removed), so the sensitivity now
+    # uses McBride-Wright's freshwater -42 (IAPWS baseline, intercept 0.018 pp).
+    from validation.mcbridewright2015_density_check import SLOPE_MEAN
     x_c = 0.05
-    dV_c = abs(DVDX) * x_c
+    dV_c = abs(SLOPE_MEAN) * x_c
     vm_w = MW_WATER / (rho_w(323.15, 30.0) / 1000.0)
     v_soln = (1.0 - x_c) * vm_w + x_c * float(V_phi_route('CO2', 323.15, 30.0))
     err_c = 100.0 * x_c * dV_c / v_soln
-    check(f"CO2 composition-ceiling worst case at x=0.05: {dV_c:.2f} cm3/mol, "
-          f"{err_c:.2f}% of density (manuscript: 5.9, about 1.6%)",
-          abs(dV_c - 5.85) < 0.01 and 1.55 <= err_c < 1.65,
+    check(f"CO2 composition-ceiling sensitivity at x=0.05: {dV_c:.2f} cm3/mol, "
+          f"{err_c:.2f}% of density (manuscript: 2.1, about 0.6%)",
+          abs(dV_c - 2.10) < 0.01 and 0.55 <= err_c < 0.65,
           f"dV={dV_c:.2f} err={err_c:.3f}%")
-    # ... and "more than half the densification itself": densification at
-    # x = 0.05 is 2.5-2.8% over the envelope, so the ratio clears 0.5.
     dens_c = density_change_pct('CO2', x_c, 323.15, 30.0)[2]
     check(f"ceiling term vs densification at x=0.05: {err_c:.2f} / {dens_c:.2f}% "
-          f"= {err_c / dens_c:.2f} (manuscript: more than half)",
-          0.5 < err_c / dens_c < 0.75, f"ratio={err_c / dens_c:.3f}")
+          f"= {err_c / dens_c:.2f} (a fifth to a quarter of the densification)",
+          0.15 < err_c / dens_c < 0.3, f"ratio={err_c / dens_c:.3f}")
 
     # C3H8 is a known outlier against independent data: model 67.0 against
     # Moore 70.7 and Zhou 75.0. Pinned so the discrepancy is not forgotten.
